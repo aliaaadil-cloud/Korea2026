@@ -162,6 +162,13 @@
   .daycost tr.sub td { font-weight: 700; background: var(--brand-soft); }
   .cat { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; }
   .cat.place { color: var(--place); } .cat.food { color: var(--food); } .cat.move { color: var(--move); } .cat.shop { color: var(--shop); } .cat.stay { color: var(--stay); }
+  .alts { margin-top: 10px; border-top: 1px dashed var(--line); padding-top: 8px; display: grid; gap: 8px; }
+  .alts-h { font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--muted); }
+  .alt { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+  .alt-name { font-weight: 650; font-size: 14px; }
+  .alt-tag { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 1px 6px; border-radius: 5px; margin-left: 4px; vertical-align: 1px; background: var(--shop-soft); color: var(--shop); }
+  .alt-tag.alt2 { background: var(--brand-soft); color: var(--brand); }
+  .alt .links a { background: var(--card); }
   .exp-form { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .exp-form input, .exp-form select { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 8px; font: inherit; background: var(--card); color: var(--ink); }
   .exp-form .wide { grid-column: 1 / -1; }
@@ -406,17 +413,18 @@ const DAYS = [
       { t: "11:00 AM", type: "move", title: "Buy Climate Cards at Omokgyo Station", desc: "At the ticket machine: choose English → Climate Card. Buy 5 cards (₩3,000 each) and charge each with the 5-day pass (₩15,000). Covers 16–20 Nov.", ko: "오목교역", en: "Omokgyo Station Seoul", note: "Visa/Mastercard work at Line 1–8 machines (small foreign-card fee may apply). Bring ₩90,000 cash as backup." },
       { t: "11:15 AM", type: "move", title: "To Yeouido", desc: "Line 5, approx. 15 min.", from: "Omokgyo Station Seoul", to: "The Hyundai Seoul", ko: "더현대 서울" },
       { t: "11:30 AM", type: "shop", title: "The Hyundai Seoul", desc: "Indoor shopping and cafés.", ko: "더현대 서울", en: "The Hyundai Seoul" },
-      { t: "12:30 PM", type: "food", title: "Lunch · Durga (Yeouido)", desc: "Muslim-owned, halal Indian food. No pork or lard. ~10 min walk from The Hyundai Seoul.", ko: "두르가 여의도", en: "Durga Yeouido Seoul", halal: "cert" },
-      { t: "1:30 PM", type: "place", title: "Yeouido Han River Park", desc: "Riverside walk in daylight, subject to weather.", ko: "여의도한강공원", en: "Yeouido Hangang Park" },
-      { t: "2:15 PM", type: "move", title: "To Sinchon (near Yonsei Univ.)", desc: "Bus or taxi, approx. 25–30 min.", from: "Yeouido Hangang Park", to: "Sinchon Station Seoul", ko: "신촌역" },
-      { t: "2:45 PM", type: "place", title: "Cafe Pokpo", desc: "Mirror-selfie photo spot – go while there is daylight.", ko: "카페 폭포 신촌", en: "Cafe Pokpo Sinchon Seoul" },
-      { t: "3:30 PM", type: "place", title: "Ewha Womans University street", desc: "Boutique alley and the sunken campus entrance.", ko: "이화여자대학교", en: "Ewha Womans University" },
+      { t: "12:30 PM", type: "place", title: "Yeouido Han River Park", desc: "Riverside walk in daylight, subject to weather.", ko: "여의도한강공원", en: "Yeouido Hangang Park" },
+      { t: "1:00 PM", type: "move", title: "To Sinchon (near Yonsei Univ.)", desc: "Bus or taxi, approx. 25–30 min.", from: "Yeouido Hangang Park", to: "Gosame Sinchon", ko: "신촌역" },
+      { t: "1:30 PM", type: "food", title: "Lunch · Gosame (Sinchon)", desc: "Grilled mackerel (₩14,000) and spicy stir-fried squid (₩13,000) with Korean side dishes. 38 Yonsei-ro 7an-gil. Open 11 AM–8:40 PM.", ko: "고삼이 신촌", en: "Gosame Sinchon", halal: "friendly", note: "Break time 2:00–4:30 PM – order before about 1:45 PM. Pork-free, no alcohol sold, no added alcohol; bulgogi uses halal-certified beef (per Unnie from Seoul / KTO Malaysia)." },
+      { t: "2:30 PM", type: "place", title: "Cafe Pokpo", desc: "Mirror-selfie photo spot – go while there is daylight.", ko: "카페 폭포 신촌", en: "Cafe Pokpo Sinchon Seoul" },
+      { t: "3:15 PM", type: "place", title: "Ewha Womans University street", desc: "Boutique alley and the sunken campus entrance.", ko: "이화여자대학교", en: "Ewha Womans University" },
       { t: "4:15 PM", type: "move", title: "To Haneul Park", desc: "Line 2 to Hapjeong → Line 6 to World Cup Stadium Stn, Exit 1, then ~15 min walk. Approx. 30–35 min.", from: "Ewha Womans University Station", to: "Haneul Park Seoul", ko: "월드컵경기장역" },
       { t: "4:50 PM", type: "place", title: "Haneul Park – silver grass & sunset", desc: "291-step stairs or the Frog Tram (~15 min). Sunset around 5:15 PM over the Han River.", ko: "하늘공원", en: "Haneul Park Seoul", note: "Frog Tram approx. ₩3,000 round trip if anyone prefers not to climb." },
       { t: "5:45 PM", type: "move", title: "To Hapjeong", desc: "Walk down, Line 6 two stops. Approx. 20 min.", from: "World Cup Stadium Station Seoul", to: "Hapjeong Station Seoul", ko: "합정역" },
       { t: "6:15 PM", type: "place", title: "YG Entertainment building", desc: "Exterior photos in Hapjeong.", ko: "YG엔터테인먼트", en: "YG Entertainment Seoul" },
       { t: "6:45 PM", type: "place", title: "Hongdae", desc: "Walk ~10 min; main streets, shops and street performances.", ko: "홍대입구역", en: "Hongdae Seoul" },
-      { t: "7:30 PM", type: "food", title: "Dinner · Busan Jib (Hongdae)", desc: "Halal Korean food.", ko: "부산집 홍대", en: "Busanjib Hongdae halal", halal: "cert" },
+      { t: "7:30 PM", type: "food", title: "Dinner · Busan Jib (Hongdae)", desc: "Halal Korean food.", ko: "부산집 홍대", en: "Busanjib Hongdae halal", halal: "cert",
+        alts: [ { tag: "TikTok pick", name: "Gosame (Hapjeong branch)", desc: "Same grilled-fish restaurant as lunch, 31-6 World Cup-ro 3-gil – about 5 min from YG. 11 AM–9 PM (break 3:00–4:30 PM, last order 8:20 PM). Swap in if you want Gosame for dinner instead of lunch.", ko: "고삼이 합정", en: "Gosame Hapjeong", halal: "friendly" } ] },
       { t: "8:30 PM", type: "shop", title: "Hongdae night shopping", desc: "More time around Hongdae.", ko: "홍대 걷고싶은거리", en: "Hongdae shopping street" },
       { t: "9:30 PM", type: "move", title: "Back to Airbnb", desc: "Line 2 + Line 5, approx. 35 min.", from: "Hongik University Station", to: "Omokgyo Station Seoul", ko: "오목교역" },
     ],
@@ -439,9 +447,13 @@ const DAYS = [
       { t: "4:45 PM", type: "place", title: "Ikseondong + Jayeondo salt bread", desc: "Hanok alleys, cafés, boutiques. Salt bread batch at 5:00 PM (min. 4 pieces).", ko: "자연도소금빵 익선", en: "Jayeondo Salt Bread Ikseon-dong" },
       { t: "6:15 PM", type: "move", title: "To Dongdaemun", desc: "Line 5, Jongno 3-ga → Dongdaemun History & Culture Park. Approx. 10 min.", from: "Jongno 3-ga Station", to: "Dongdaemun Design Plaza", ko: "동대문역사문화공원역" },
       { t: "6:30 PM", type: "place", title: "Dongdaemun Design Plaza (DDP)", desc: "Lit up at night.", ko: "동대문디자인플라자", en: "Dongdaemun Design Plaza" },
-      { t: "7:00 PM", type: "move", title: "To Myeongdong for dinner", desc: "Line 4, Dongdaemun History & Culture Park → Myeongdong. Approx. 10 min.", from: "Dongdaemun History & Culture Park Station", to: "Kampungku Restaurant Seoul", ko: "명동역" },
-      { t: "7:15 PM", type: "food", title: "Dinner · Kampungku", desc: "Halal Korean fried chicken and bulgogi. Near Myeongdong Station. Daily 11 AM–10 PM.", ko: "캄풍쿠", en: "Kampungku Restaurant Seoul", halal: "cert" },
-      { t: "8:15 PM", type: "move", title: "Back to Dongdaemun", desc: "Line 4 Myeongdong → Dongdaemun Station, approx. 10 min.", from: "Myeongdong Station", to: "Dongdaemun Station Seoul", ko: "동대문역" },
+      { t: "7:00 PM", type: "move", title: "Walk to dinner", desc: "From DDP towards Dongdaemun Station (Exit 6/7), approx. 10–15 min – or Line 4, 1 stop.", from: "Dongdaemun Design Plaza", to: "Dongdaemun Station Seoul", ko: "동대문역" },
+      { t: "7:15 PM", type: "food", title: "Dinner · Special Duck (Dongdaemun)", desc: "Halal-certified Korean smoked duck and spicy duck soup. 12 Jong-ro 46-gil, ~3 min from Dongdaemun Station Exit 6/7. 11 AM–11 PM, closed Sundays.", ko: "스페셜덕 동대문", en: "Special Duck Dongdaemun halal", halal: "cert",
+        alts: [
+          { tag: "TikTok pick", name: "Chungmuro Jjukkumi Bulgogi", desc: "Charcoal-grilled spicy baby octopus with fried rice. 11 Toegye-ro 31-gil, near Chungmuro Station (Line 4, 1 stop from Dongdaemun History & Culture Park). About 11:30 AM–10 PM.", ko: "충무로쭈꾸미불고기", en: "Chungmuro Jjukkumi Bulgogi", halal: "check", note: "Seafood only, but NOT halal-certified and a halal directory lists it as not halal – the marinade may contain alcohol. Ask before ordering.", warn: true },
+          { tag: "Alternative", name: "Wanpan Saengguksu", desc: "Cheap Korean noodles (anchovy, fish-cake, spicy bibim noodles ₩5,500–7,000) near Jongno 5-ga / Dongdaemun. Hours not confirmed.", ko: "완판생국수", en: "Wanpan Saengguksu Jongno", halal: "friendly" }
+        ] },
+      { t: "8:15 PM", type: "move", title: "Walk to Daiso", desc: "Approx. 5 min from Special Duck.", from: "Dongdaemun Station Seoul", to: "Daiso Dongdaemun", ko: "다이소 동대문점" },
       { t: "8:30 PM", type: "shop", title: "Daiso Dongdaemun", desc: "B1, Dongnyeong Building, 309 Yulgok-ro – short walk from Dongdaemun Station. Open 10 AM–10 PM. Much calmer than the Myeongdong Daiso.", ko: "다이소 동대문점", en: "Daiso Dongdaemun", note: "Tax-refund shop: spend ₩15,000+ on one receipt and bring your passport." },
       { t: "9:15 PM", type: "shop", title: "Dongdaemun night shopping", desc: "Walk ~10 min to Doota and the fashion malls near DDP.", ko: "두타몰", en: "Doota Mall Seoul" },
       { t: "10:00 PM", type: "move", title: "Back to Airbnb", desc: "Line 5 direct from Dongdaemun History & Culture Park, approx. 40 min.", from: "Dongdaemun History & Culture Park Station", to: "Omokgyo Station Seoul", ko: "오목교역" },
@@ -453,14 +465,17 @@ const DAYS = [
     stops: [
       { t: "8:00 AM", type: "move", title: "Breakfast, then to Seongsu", desc: "Line 5 + Line 2, approx. 50 min.", from: "Omokgyo Station Seoul", to: "Seongsu Station Seoul", ko: "성수역" },
       { t: "9:30 AM", type: "shop", title: "Seongsu Yeonmujang-gil", desc: "Cafés, flagship stores, pop-ups – including Suare and Super Matcha.", ko: "성수동 연무장길", en: "Yeonmujang-gil Seongsu" },
-      { t: "12:30 PM", type: "food", title: "Lunch · Jojo Kalguksu (Seongsu)", desc: "Alcohol-free clam noodles and seafood pancake. Queue machine outside.", ko: "조조칼국수 성수점", en: "Jojo Kalguksu Seongsu", halal: "friendly" },
+      { t: "12:30 PM", type: "food", title: "Lunch · Jojo Kalguksu (Seongsu)", desc: "Clam noodles ₩9,000, octopus seafood pancake ₩13,000, clam soup ₩12,000. 110 m from Seongsu Station Exit 2. 10 AM–9:30 PM. Queue machine outside – arrive before 12:30 if you can.", ko: "조조칼국수 성수점", en: "Jojo Kalguksu Seongsu", halal: "friendly",
+        note: "Seongsu vs Sejong-daero (City Hall) branch: same menu and prices. Seongsu is the better choice – you are already there on Day 3. The City Hall branch only suits Day 2 lunch (near Ildossi).",
+        alts: [ { tag: "TikTok pick", name: "Jojo Kalguksu (Sejong-daero / City Hall branch)", desc: "27 Sejong-daero 11-gil, near City Hall Station. Daily 10 AM–9:30 PM; queue through an app (~30 min reported). Use it as Day 2 lunch instead of Ildossi if you prefer.", ko: "조조칼국수 시청점", en: "Jojo Kalguksu City Hall", halal: "friendly" } ] },
       { t: "2:00 PM", type: "place", title: "Seoul Forest", desc: "Autumn scenery.", ko: "서울숲", en: "Seoul Forest" },
       { t: "3:45 PM", type: "move", title: "To Yongmasan Station", desc: "Approx. 35 min.", from: "Seoul Forest", to: "Yongmasan Station Seoul", ko: "용마산역" },
       { t: "4:20 PM", type: "move", title: "Walk up to the skywalk", desc: "Approx. 20–25 min uphill.", from: "Yongmasan Station Seoul", to: "Yongmasan Seoul", ko: "용마산" },
       { t: "4:45 PM", type: "place", title: "Yongmasan Skywalk", desc: "Sunset (~5:15 PM) and night views over Seoul.", ko: "용마산 스카이워크", en: "Yongmasan Skywalk Seoul" },
       { t: "5:45 PM", type: "move", title: "To Itaewon", desc: "Taxi approx. 35–40 min, or subway approx. 55 min.", from: "Yongmasan Station Seoul", to: "Seoul Central Mosque", ko: "이태원역" },
       { t: "6:30 PM", type: "place", title: "Itaewon & Seoul Central Mosque", desc: "Explore the area around the mosque.", ko: "서울중앙성원", en: "Seoul Central Mosque" },
-      { t: "7:15 PM", type: "food", title: "Dinner · EID – Halal Korean Food", desc: "Halal-certified Korean, near the mosque. 67 Usadan-ro 10-gil. Open until 9:00 PM.", ko: "이드 할랄 코리안 푸드", en: "EID Halal Korean Food Itaewon", halal: "cert" },
+      { t: "7:15 PM", type: "food", title: "Dinner · Jipbab Gim Seonsaeng (Itaewon)", desc: "Halal Korean home-style meals – bulgogi, fried chicken and more (₩10,000–20,000). Near Itaewon Station Exit 4 / Noksapyeong. Mon–Sat 11:30 AM–9:30 PM (break 2–3 PM), closed Sundays. Order at the kiosk.", ko: "집밥김선생 이태원", en: "Halal Korean Restaurant Home Cooked Meal Gim Soensaeng Itaewon", halal: "cert",
+        alts: [ { tag: "Alternative", name: "EID – Halal Korean Food", desc: "Halal-certified Korean, on the mosque lane (Usadan-ro 10-gil). Open until 9:00 PM.", ko: "이드 할랄 코리안 푸드", en: "EID Halal Korean Food Itaewon", halal: "cert" } ] },
       { t: "8:30 PM", type: "place", title: "Gyeongridan-gil", desc: "Trendy, less touristy street with boutique cafés and shops.", ko: "경리단길", en: "Gyeongridan-gil Seoul" },
       { t: "9:30 PM", type: "move", title: "Back to Airbnb", desc: "Approx. 45 min.", from: "Noksapyeong Station", to: "Omokgyo Station Seoul", ko: "오목교역" },
     ],
@@ -473,16 +488,16 @@ const DAYS = [
       { t: "7:30 AM", type: "move", title: "To Seoul Grand Park", desc: "Line 5 + Line 2 + Line 4, approx. 60–70 min.", from: "Omokgyo Station Seoul", to: "Seoul Grand Park Station", ko: "대공원역" },
       { t: "9:00 AM", type: "place", title: "Seoul Grand Park", desc: "Zoo, botanical garden and cable car (Sky Lift).", ko: "서울대공원", en: "Seoul Grand Park", note: "Zoo closes 5:00 PM in November (last entry 4:00 PM)." },
       { t: "11:30 AM", type: "move", title: "To Jamsil", desc: "Line 4 + Line 2, approx. 55 min.", from: "Seoul Grand Park Station", to: "Lotte World Mall", ko: "잠실역" },
-      { t: "12:30 PM", type: "food", title: "Lunch · Shilla Jemyeon (Lotte World Mall 6F)", desc: "Korean seafood noodles: spicy octopus kalguksu (kalnakji), clam noodle soup. 10:30 AM–10 PM.", ko: "신라제면 잠실", en: "Shilla Jemyeon Lotte World Mall", halal: "check", note: "Not halal-certified. No pork in these dishes – ask about cooking wine.", warn: true },
+      { t: "12:30 PM", type: "food", title: "Lunch · Agra (Lotte World Mall 6F)", desc: "Indian curries, tandoori and naan. Uses halal meat for chicken and lamb.", ko: "아그라 롯데월드몰", en: "Agra Lotte World Mall", halal: "friendly", note: "No Muslim-friendly Korean restaurant was found in Jamsil, so this is the safest option here. Serves alcohol to other guests." },
       { t: "1:30 PM", type: "move", title: "To Olympic Park", desc: "Line 8, Jamsil → Mongchontoseong. Approx. 10 min.", from: "Jamsil Station", to: "Olympic Park Seoul", ko: "몽촌토성역" },
       { t: "1:45 PM", type: "place", title: "Seoul Olympic Park", desc: "World Peace Gate, Olympic monuments, Mongchontoseong, autumn scenery.", ko: "올림픽공원", en: "Olympic Park Seoul" },
       { t: "3:15 PM", type: "place", title: "Songridan-gil", desc: "Cafés, restaurants and shops.", ko: "송리단길", en: "Songridan-gil Seoul" },
       { t: "4:30 PM", type: "move", title: "To COEX", desc: "Line 9, Songpanaru → Bongeunsa. Approx. 20 min.", from: "Songpanaru Station", to: "COEX Mall", ko: "봉은사역" },
       { t: "5:00 PM", type: "place", title: "Starfield Library", desc: "The famous multi-level library inside COEX.", ko: "별마당도서관", en: "Starfield Library COEX" },
-      { t: "5:45 PM", type: "shop", title: "COEX Mall", desc: "Shopping until about 6:40 PM.", ko: "코엑스몰", en: "COEX Mall" },
-      { t: "6:40 PM", type: "move", title: "To Yeoksam", desc: "Line 2, Samseong → Yeoksam (~10 min) + 5 min walk.", from: "Samseong Station", to: "Yang Good Seoul", ko: "역삼역" },
-      { t: "7:00 PM", type: "food", title: "Dinner · Yang Good", desc: "Halal lamb Korean BBQ grilled at the table. 15 Nonhyeon-ro 95-gil. Mon–Fri 4–11 PM.", ko: "양굿", en: "Yang Good Halal BBQ Seoul", halal: "cert", note: "Uses halal meat; serves alcohol to other guests. Reservation recommended." },
-      { t: "8:00 PM", type: "move", title: "To Garosugil", desc: "Taxi ~15 min, or subway ~25 min.", from: "Yeoksam Station", to: "Garosu-gil Sinsa-dong", ko: "신사역" },
+      { t: "5:45 PM", type: "shop", title: "COEX Mall", desc: "Shopping until about 7:00 PM.", ko: "코엑스몰", en: "COEX Mall" },
+      { t: "7:00 PM", type: "food", title: "Dinner · Nampodong Sujebi (COEX Mall)", desc: "Korean hand-torn dough soup and handmade noodles – perilla, seafood and anchovy-kelp broths, with rice balls or Chungmu gimbap. Inside COEX Mall, no travel needed.", ko: "남포동수제비 코엑스", en: "Nampodong Sujebi COEX", halal: "friendly", note: "Checked by Unnie from Seoul with KTO Malaysia: pork-free restaurant, no meat and no added alcohol in the menu. Avoid any jjamppong (may use meat broth) – ask staff." ,
+        alts: [ { tag: "Alternative", name: "Plantude (Starfield COEX)", desc: "Vegan restaurant inside COEX – pork-free, no meat, no added alcohol (same source).", ko: "플랜튜드 코엑스", en: "Plantude Starfield COEX", halal: "friendly" } ] },
+      { t: "8:00 PM", type: "move", title: "To Garosugil", desc: "Subway ~30 min (Line 9 + Line 3 to Sinsa), or taxi ~15–20 min.", from: "COEX Mall", to: "Garosu-gil Sinsa-dong", ko: "신사역" },
       { t: "8:30 PM", type: "shop", title: "Garosugil", desc: "Tree-lined boutique shopping street, quieter than Myeongdong.", ko: "가로수길", en: "Garosu-gil Seoul" },
       { t: "9:15 PM", type: "move", title: "Back to Airbnb", desc: "Approx. 50 min.", from: "Sinsa Station", to: "Omokgyo Station Seoul", ko: "오목교역" },
     ],
@@ -526,7 +541,7 @@ const COSTS = {
   "0|Airport → Airbnb": { k: [19000, 19000], label: "Booked minivan ₩95,000 ÷ 5 people", fixed: true },
   "0|To Yeouido": { k: [0, 0], label: "Covered by Climate Card" },
   "0|The Hyundai Seoul": { k: [0, 0], label: "Free to browse" },
-  "0|Lunch · Durga (Yeouido)": { k: [15000, 25000], label: "Curry + rice/naan + drink", est: true },
+  "0|Lunch · Gosame (Sinchon)": { k: [13000, 20000], label: "Grilled mackerel ₩14,000 / spicy squid ₩13,000" },
   "0|Yeouido Han River Park": { k: [0, 0], label: "Free" },
   "0|To Sinchon (near Yonsei Univ.)": { k: [0, 0], label: "Seoul bus covered by Climate Card (taxi would be extra)" },
   "0|Cafe Pokpo": { k: [6000, 9000], label: "One drink each", est: true },
@@ -553,7 +568,7 @@ const COSTS = {
   "1|To Dongdaemun": { k: [0, 0], label: "Covered by Climate Card" },
   "1|Dongdaemun Design Plaza (DDP)": { k: [0, 0], label: "Free outdoors" },
   "1|To Myeongdong for dinner": { k: [0, 0], label: "Covered by Climate Card" },
-  "1|Dinner · Kampungku": { k: [15000, 22000], label: "Fried chicken / bulgogi set", est: true },
+  "1|Dinner · Special Duck (Dongdaemun)": { k: [15000, 22000], label: "Smoked duck + spicy duck soup (half-and-half set ₩30,000 to share)", est: true },
   "1|Back to Dongdaemun": { k: [0, 0], label: "Covered by Climate Card" },
   "1|Back to Airbnb": { k: [0, 0], label: "Covered by Climate Card" },
 
@@ -565,22 +580,22 @@ const COSTS = {
   "2|Yongmasan Skywalk": { k: [0, 0], label: "Free" },
   "2|To Itaewon": { k: [0, 9000], label: "Subway free with Climate Card; taxi share ~₩5,000–9,000 if you take 2 taxis", est: true },
   "2|Itaewon & Seoul Central Mosque": { k: [0, 0], label: "Free" },
-  "2|Dinner · EID – Halal Korean Food": { k: [10000, 18000], label: "Bibimbap / bulgogi / samgyetang", est: true },
+  "2|Dinner · Jipbab Gim Seonsaeng (Itaewon)": { k: [10000, 20000], label: "Mains ₩10,000–20,000" },
   "2|Gyeongridan-gil": { k: [0, 0], label: "Free" },
   "2|Back to Airbnb": { k: [0, 0], label: "Covered by Climate Card" },
 
   "3|To Seoul Grand Park": { k: [0, 2050], label: "Gwacheon is outside Seoul – may not be covered; if not, buy a single ticket (~₩1,750 + ₩500 refundable deposit)" },
   "3|Seoul Grand Park": { k: [14500, 14500], label: "Zoo + Sky Lift + elephant train package" },
   "3|To Jamsil": { k: [0, 2050], label: "Boarding in Gwacheon – may not be covered; if not, single ticket ~₩1,750" },
-  "3|Lunch · Shilla Jemyeon (Lotte World Mall 6F)": { k: [11000, 16000], label: "Kalnakji ₩14,000 / clam noodles ₩11,000" },
+  "3|Lunch · Agra (Lotte World Mall 6F)": { k: [15000, 25000], label: "Curry + naan/rice", est: true },
   "3|To Olympic Park": { k: [0, 0], label: "Covered by Climate Card" },
   "3|Seoul Olympic Park": { k: [0, 0], label: "Free" },
   "3|Songridan-gil": { k: [0, 8000], label: "Free; café optional" },
   "3|To COEX": { k: [0, 0], label: "Covered by Climate Card" },
   "3|Starfield Library": { k: [0, 0], label: "Free" },
   "3|To Yeoksam": { k: [0, 0], label: "Covered by Climate Card" },
-  "3|Dinner · Yang Good": { k: [30000, 45000], label: "Halal lamb BBQ", est: true },
-  "3|To Garosugil": { k: [0, 4000], label: "Subway free with Climate Card; taxi share ~₩3,000–4,000", est: true },
+  "3|Dinner · Nampodong Sujebi (COEX Mall)": { k: [9000, 15000], label: "Sujebi / noodle set", est: true },
+  "3|To Garosugil": { k: [0, 5000], label: "Subway free with Climate Card; taxi share ~₩4,000–5,000", est: true },
   "3|Back to Airbnb": { k: [0, 0], label: "Covered by Climate Card" },
 
   "4|Breakfast, then to Namdaemun": { k: [0, 0], label: "Covered by Climate Card" },
@@ -614,7 +629,6 @@ const SHOPPING = [
 const TODOS = [
   "Book Changdeokgung Secret Garden English tour (Tue 17 Nov, 2:30 PM) online",
   "Confirm minivan pick-ups: Incheon arrivals 16 Nov (flight lands ~8:00 AM) and Airbnb 21 Nov at 7:00 AM; save the driver's contact",
-  "Reserve Yang Good for Thu 19 Nov dinner (7:00 PM)",
   "Climate Card: buy 5 cards + 5-day pass at Omokgyo Station on 16 Nov (₩18,000 each, ₩90,000 total). Keep some cash as backup",
   "Install Naver Map or KakaoMap and Papago",
   "Get a Korea SIM / eSIM or pocket Wi-Fi",
@@ -638,7 +652,7 @@ const TYPE = {
   shop:  { tag: "Shopping", icon: "🛍️" },
 };
 const HALAL = {
-  cert: ["b-cert", "Halal / Muslim-owned"],
+  cert: ["b-cert", "Halal"],
   friendly: ["b-friendly", "Muslim-friendly (no pork, no alcohol in food)"],
   check: ["b-check", "Not certified – check"],
 };
@@ -697,6 +711,17 @@ function renderTabs() {
     </button>`).join("");
 }
 
+function altsHTML(s) {
+  if (!s.alts || !s.alts.length) return "";
+  return `<div class="alts"><div class="alts-h">Also on your list</div>${s.alts.map(a => `
+    <div class="alt">
+      <div class="alt-name">${esc(a.name)}<span class="alt-tag ${a.tag === "TikTok pick" ? "" : "alt2"}">${esc(a.tag)}</span></div>
+      <div class="desc">${esc(a.desc)}</div>
+      ${a.halal ? `<span class="badge ${HALAL[a.halal][0]}">${HALAL[a.halal][1]}</span>` : ""}
+      ${a.note ? `<div class="note ${a.warn ? "warn" : ""}">${esc(a.note)}</div>` : ""}
+      <div class="links">${links({ type: "food", ko: a.ko, en: a.en })}</div>
+    </div>`).join("")}</div>`;
+}
 function stopHTML(s, dayIdx, stopIdx, showDay) {
   const id = `${dayIdx}-${stopIdx}`;
   const done = !!state.done[id];
@@ -720,6 +745,7 @@ function stopHTML(s, dayIdx, stopIdx, showDay) {
       ${note}
       ${costChip(dayIdx, s)}
       <div class="links">${links(s)}</div>
+      ${altsHTML(s)}
     </div>
   </li>`;
 }
@@ -734,7 +760,7 @@ function renderDay() {
   if (q) {
     items = [];
     DAYS.forEach((dd, di) => dd.stops.forEach((s, si) => {
-      const hay = [s.title, s.desc, s.note, s.ko, s.en, s.t].join(" ").toLowerCase();
+      const hay = [s.title, s.desc, s.note, s.ko, s.en, s.t, ...(s.alts || []).map(a => a.name + " " + a.desc)].join(" ").toLowerCase();
       if (hay.includes(q)) items.push([s, di, si]);
     }));
   } else {
@@ -796,6 +822,7 @@ function renderFood() {
       ${halal}
       ${s.note ? `<div class="note ${s.warn ? "warn" : ""}">${esc(s.note)}</div>` : ""}
       <div class="links">${links(s)}</div>
+      ${altsHTML(s)}
     </div>`;
   }).join("");
 }
