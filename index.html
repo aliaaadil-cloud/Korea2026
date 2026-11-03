@@ -19,6 +19,7 @@
     --food:  #b4531c;  --food-soft:  #fbeee4;
     --move:  #3557a8;  --move-soft:  #e7edf9;
     --stay:  #6b4fa0;  --stay-soft:  #efeaf8;
+    --shop:  #a3336b;  --shop-soft:  #f8e8f0;
     --now:   #d6336c;
     --done:  #9a9aa0;
     --shadow: 0 1px 2px rgba(0,0,0,.05), 0 2px 8px rgba(0,0,0,.04);
@@ -31,6 +32,7 @@
       --food: #f0a26f;  --food-soft: #2e2016;
       --move: #93aef0;  --move-soft: #1b2236;
       --stay: #b9a2e6;  --stay-soft: #241d33;
+      --shop: #f08cbd;  --shop-soft: #33182a;
       --now: #ff6b9a; --done: #6c6c73;
       --shadow: none;
     }
@@ -42,6 +44,7 @@
     --food: #f0a26f;  --food-soft: #2e2016;
     --move: #93aef0;  --move-soft: #1b2236;
     --stay: #b9a2e6;  --stay-soft: #241d33;
+    --shop: #f08cbd;  --shop-soft: #33182a;
     --now: #ff6b9a; --done: #6c6c73;
     --shadow: none;
   }
@@ -129,6 +132,7 @@
   .stop.food .dot { background: var(--food); }
   .stop.move .dot { background: var(--move); }
   .stop.stay .dot { background: var(--stay); }
+  .stop.shop .dot { background: var(--shop); }
   .card {
     background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px;
     box-shadow: var(--shadow); min-width: 0;
@@ -141,6 +145,33 @@
   .food .tag  { background: var(--food-soft);  color: var(--food); }
   .move .tag  { background: var(--move-soft);  color: var(--move); }
   .stay .tag  { background: var(--stay-soft);  color: var(--stay); }
+  .shop .tag  { background: var(--shop-soft);  color: var(--shop); }
+  .cost { display: inline-block; font-size: 12px; font-weight: 600; margin-top: 6px; padding: 3px 8px; border-radius: 8px; background: var(--bg); border: 1px solid var(--line); }
+  .cost small { font-weight: 400; color: var(--muted); }
+  .rate { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: 14px; }
+  .rate input { width: 84px; border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; font: inherit; background: var(--bg); color: var(--ink); }
+  .daycost { margin-top: 14px; }
+  .daycost summary { cursor: pointer; font-weight: 700; padding: 10px 12px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; list-style: none; display: flex; justify-content: space-between; gap: 8px; }
+  .daycost summary::-webkit-details-marker { display: none; }
+  .daycost[open] summary { border-radius: 12px 12px 0 0; }
+  .daycost .body { border: 1px solid var(--line); border-top: 0; border-radius: 0 0 12px 12px; background: var(--card); overflow-x: auto; }
+  .daycost table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .daycost td, .daycost th { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  .daycost th { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .daycost td.num, .daycost th.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .daycost tr.sub td { font-weight: 700; background: var(--brand-soft); }
+  .cat { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; }
+  .cat.place { color: var(--place); } .cat.food { color: var(--food); } .cat.move { color: var(--move); } .cat.shop { color: var(--shop); } .cat.stay { color: var(--stay); }
+  .exp-form { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .exp-form input, .exp-form select { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 8px; font: inherit; background: var(--card); color: var(--ink); }
+  .exp-form .wide { grid-column: 1 / -1; }
+  .btn { border: 0; background: var(--brand); color: #fff; border-radius: 10px; padding: 10px 12px; font: 600 14px inherit; font-family: inherit; cursor: pointer; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn { color: #121214; } }
+  :root[data-theme="dark"] .btn { color: #121214; }
+  .exp-list { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 6px; }
+  .exp-list li { display: flex; gap: 8px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font-size: 13.5px; }
+  .exp-list li .amt { margin-left: auto; font-weight: 700; white-space: nowrap; }
+  .exp-list li button { border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 16px; }
   .desc { color: var(--muted); font-size: 13.5px; margin-top: 3px; }
   .note { font-size: 12.5px; margin-top: 6px; padding: 6px 8px; border-radius: 8px; background: var(--brand-soft); color: var(--ink); }
   .note.warn { background: #fff4d6; color: #5c4400; }
@@ -222,7 +253,7 @@
     <button role="tab" data-panel="itinerary" aria-selected="true">Itinerary</button>
     <button role="tab" data-panel="food" aria-selected="false">Halal food</button>
     <button role="tab" data-panel="info" aria-selected="false">Info &amp; to-do</button>
-    <button role="tab" data-panel="budget" aria-selected="false">Budget</button>
+    <button role="tab" data-panel="budget" aria-selected="false">Costs</button>
   </div>
 </nav>
 
@@ -241,6 +272,7 @@
       <button class="chip" data-filter="all" aria-pressed="true">All</button>
       <button class="chip" data-filter="place" aria-pressed="false">📍 Places</button>
       <button class="chip" data-filter="food" aria-pressed="false">🍽️ Food</button>
+      <button class="chip" data-filter="shop" aria-pressed="false">🛍️ Shopping</button>
       <button class="chip" data-filter="move" aria-pressed="false">🚇 Transport</button>
       <input class="search" id="search" type="search" placeholder="Search all days… (e.g. hanbok, Line 5)" aria-label="Search the whole itinerary">
     </div>
@@ -291,9 +323,37 @@
     </div>
   </section>
 
-  <!-- BUDGET -->
+  <!-- COSTS -->
   <section class="panel hidden" id="panel-budget">
-    <h2>Estimated budget (5 people)</h2>
+    <h2>Costs by day</h2>
+    <p class="small">Estimated prices for every place, meal and ride on the plan, plus a suggested shopping allowance. Tap a day to open it. Prices are approximate (2026) and can change.</p>
+    <div class="rate">
+      <label>RM 1 = ₩ <input id="rateIn" type="number" inputmode="decimal" min="100" max="1000" step="1"></label>
+      <label>People <input id="paxIn" type="number" inputmode="numeric" min="1" max="20" step="1"></label>
+      <span class="small">Rate default ₩329 (2 Nov 2026). Change it to your money changer's rate.</span>
+    </div>
+    <div id="costDays"></div>
+
+    <h3>Whole trip (in Korea)</h3>
+    <table class="simple" id="tripTotal"></table>
+    <p class="small">Transport counts one subway fare per person per ride. A normal taxi takes 4 people, so 5 people need 2 taxis or one large “Venti” taxi (Kakao T app) – taxi costs here assume 2 taxis.</p>
+
+    <h3>Track what you actually spend</h3>
+    <form class="exp-form" id="expForm">
+      <select id="expDay" aria-label="Day"></select>
+      <select id="expCat" aria-label="Category">
+        <option value="food">🍽️ Food</option><option value="shop">🛍️ Shopping</option>
+        <option value="move">🚇 Transport</option><option value="place">📍 Tickets</option><option value="stay">🏠 Other</option>
+      </select>
+      <input id="expAmt" class="wide" type="number" inputmode="numeric" min="0" step="100" placeholder="Amount in ₩ (won)" required>
+      <input id="expNote" class="wide" type="text" placeholder="What for? (e.g. Olive Young)">
+      <button class="btn wide" type="submit">Add expense</button>
+    </form>
+    <div class="small" id="expSum" style="margin-top:8px"></div>
+    <ul class="exp-list" id="expList"></ul>
+    <p class="small">Expenses are saved on this phone only.</p>
+
+    <h3>Overall estimate in the itinerary document</h3>
     <table class="simple">
       <thead><tr><th>Item</th><th style="text-align:right">RM</th></tr></thead>
       <tbody>
@@ -305,7 +365,7 @@
         <tr class="total"><td>Per person</td><td class="num">2,540</td></tr>
       </tbody>
     </table>
-    <p class="small">Excludes international airfare, travel insurance and personal shopping. Estimates only.</p>
+    <p class="small">Excludes international airfare, travel insurance and personal shopping.</p>
   </section>
 
   <footer class="foot">Made from itinerary v4 · Map links open Naver Map, KakaoMap or Google Maps search</footer>
@@ -327,7 +387,7 @@ const DAYS = [
       { t: "9:15 AM", type: "move", title: "Airport → Airbnb", desc: "AREX airport railway to Gimpo Airport, then Line 5 to Omokgyo. Approx. 1 hr 10 min.", from: "Incheon International Airport", to: "Omokgyo Station Seoul", ko: "오목교역" },
       { t: "10:30 AM", type: "stay", title: "Check in / drop luggage", desc: "Freshen up at the Airbnb.", ko: "오목교역", en: "Omokgyo Station Seoul" },
       { t: "11:15 AM", type: "move", title: "To Yeouido", desc: "Line 5, approx. 15 min.", from: "Omokgyo Station Seoul", to: "The Hyundai Seoul", ko: "더현대 서울" },
-      { t: "11:30 AM", type: "place", title: "The Hyundai Seoul", desc: "Indoor shopping and cafés.", ko: "더현대 서울", en: "The Hyundai Seoul" },
+      { t: "11:30 AM", type: "shop", title: "The Hyundai Seoul", desc: "Indoor shopping and cafés.", ko: "더현대 서울", en: "The Hyundai Seoul" },
       { t: "12:30 PM", type: "food", title: "Lunch · Durga (Yeouido)", desc: "Muslim-owned, halal Indian food. No pork or lard. ~10 min walk from The Hyundai Seoul.", ko: "두르가 여의도", en: "Durga Yeouido Seoul", halal: "cert" },
       { t: "1:30 PM", type: "place", title: "Yeouido Han River Park", desc: "Riverside walk in daylight, subject to weather.", ko: "여의도한강공원", en: "Yeouido Hangang Park" },
       { t: "2:15 PM", type: "move", title: "To Sinchon (near Yonsei Univ.)", desc: "Bus or taxi, approx. 25–30 min.", from: "Yeouido Hangang Park", to: "Sinchon Station Seoul", ko: "신촌역" },
@@ -339,7 +399,7 @@ const DAYS = [
       { t: "6:15 PM", type: "place", title: "YG Entertainment building", desc: "Exterior photos in Hapjeong.", ko: "YG엔터테인먼트", en: "YG Entertainment Seoul" },
       { t: "6:45 PM", type: "place", title: "Hongdae", desc: "Walk ~10 min; main streets, shops and street performances.", ko: "홍대입구역", en: "Hongdae Seoul" },
       { t: "7:30 PM", type: "food", title: "Dinner · Busan Jib (Hongdae)", desc: "Halal Korean food.", ko: "부산집 홍대", en: "Busanjib Hongdae halal", halal: "cert" },
-      { t: "8:30 PM", type: "place", title: "Hongdae night shopping", desc: "More time around Hongdae.", ko: "홍대 걷고싶은거리", en: "Hongdae shopping street" },
+      { t: "8:30 PM", type: "shop", title: "Hongdae night shopping", desc: "More time around Hongdae.", ko: "홍대 걷고싶은거리", en: "Hongdae shopping street" },
       { t: "9:30 PM", type: "move", title: "Back to Airbnb", desc: "Line 2 + Line 5, approx. 35 min.", from: "Hongik University Station", to: "Omokgyo Station Seoul", ko: "오목교역" },
     ],
   },
@@ -363,9 +423,10 @@ const DAYS = [
       { t: "6:30 PM", type: "place", title: "Dongdaemun Design Plaza (DDP)", desc: "Lit up at night.", ko: "동대문디자인플라자", en: "Dongdaemun Design Plaza" },
       { t: "7:00 PM", type: "move", title: "To Myeongdong for dinner", desc: "Line 4, Dongdaemun History & Culture Park → Myeongdong. Approx. 10 min.", from: "Dongdaemun History & Culture Park Station", to: "Kampungku Restaurant Seoul", ko: "명동역" },
       { t: "7:15 PM", type: "food", title: "Dinner · Kampungku", desc: "Halal Korean fried chicken and bulgogi. Near Myeongdong Station. Daily 11 AM–10 PM.", ko: "캄풍쿠", en: "Kampungku Restaurant Seoul", halal: "cert" },
-      { t: "8:15 PM", type: "move", title: "Back to Dongdaemun", desc: "Line 4, approx. 10 min.", from: "Myeongdong Station", to: "Doota Mall Seoul", ko: "두타몰" },
-      { t: "8:30 PM", type: "place", title: "Dongdaemun night shopping", desc: "Doota and nearby fashion malls.", ko: "두타몰", en: "Doota Mall Seoul" },
-      { t: "9:30 PM", type: "move", title: "Back to Airbnb", desc: "Line 5 direct, approx. 40 min.", from: "Dongdaemun History & Culture Park Station", to: "Omokgyo Station Seoul", ko: "오목교역" },
+      { t: "8:15 PM", type: "move", title: "Back to Dongdaemun", desc: "Line 4 Myeongdong → Dongdaemun Station, approx. 10 min.", from: "Myeongdong Station", to: "Dongdaemun Station Seoul", ko: "동대문역" },
+      { t: "8:30 PM", type: "shop", title: "Daiso Dongdaemun", desc: "B1, Dongnyeong Building, 309 Yulgok-ro – short walk from Dongdaemun Station. Open 10 AM–10 PM. Much calmer than the Myeongdong Daiso.", ko: "다이소 동대문점", en: "Daiso Dongdaemun", note: "Tax-refund shop: spend ₩15,000+ on one receipt and bring your passport." },
+      { t: "9:15 PM", type: "shop", title: "Dongdaemun night shopping", desc: "Walk ~10 min to Doota and the fashion malls near DDP.", ko: "두타몰", en: "Doota Mall Seoul" },
+      { t: "10:00 PM", type: "move", title: "Back to Airbnb", desc: "Line 5 direct from Dongdaemun History & Culture Park, approx. 40 min.", from: "Dongdaemun History & Culture Park Station", to: "Omokgyo Station Seoul", ko: "오목교역" },
     ],
   },
   {
@@ -373,7 +434,7 @@ const DAYS = [
     route: "Seongsu → Seoul Forest → Yongmasan Skywalk → Itaewon → Gyeongridan-gil",
     stops: [
       { t: "8:00 AM", type: "move", title: "Breakfast, then to Seongsu", desc: "Line 5 + Line 2, approx. 50 min.", from: "Omokgyo Station Seoul", to: "Seongsu Station Seoul", ko: "성수역" },
-      { t: "9:30 AM", type: "place", title: "Seongsu Yeonmujang-gil", desc: "Cafés, flagship stores, pop-ups – including Suare and Super Matcha.", ko: "성수동 연무장길", en: "Yeonmujang-gil Seongsu" },
+      { t: "9:30 AM", type: "shop", title: "Seongsu Yeonmujang-gil", desc: "Cafés, flagship stores, pop-ups – including Suare and Super Matcha.", ko: "성수동 연무장길", en: "Yeonmujang-gil Seongsu" },
       { t: "12:30 PM", type: "food", title: "Lunch · Jojo Kalguksu (Seongsu)", desc: "Alcohol-free clam noodles and seafood pancake. Queue machine outside.", ko: "조조칼국수 성수점", en: "Jojo Kalguksu Seongsu", halal: "friendly" },
       { t: "2:00 PM", type: "place", title: "Seoul Forest", desc: "Autumn scenery.", ko: "서울숲", en: "Seoul Forest" },
       { t: "3:45 PM", type: "move", title: "To Yongmasan Station", desc: "Approx. 35 min.", from: "Seoul Forest", to: "Yongmasan Station Seoul", ko: "용마산역" },
@@ -400,11 +461,11 @@ const DAYS = [
       { t: "3:15 PM", type: "place", title: "Songridan-gil", desc: "Cafés, restaurants and shops.", ko: "송리단길", en: "Songridan-gil Seoul" },
       { t: "4:30 PM", type: "move", title: "To COEX", desc: "Line 9, Songpanaru → Bongeunsa. Approx. 20 min.", from: "Songpanaru Station", to: "COEX Mall", ko: "봉은사역" },
       { t: "5:00 PM", type: "place", title: "Starfield Library", desc: "The famous multi-level library inside COEX.", ko: "별마당도서관", en: "Starfield Library COEX" },
-      { t: "5:45 PM", type: "place", title: "COEX Mall", desc: "Shopping until about 6:40 PM.", ko: "코엑스몰", en: "COEX Mall" },
+      { t: "5:45 PM", type: "shop", title: "COEX Mall", desc: "Shopping until about 6:40 PM.", ko: "코엑스몰", en: "COEX Mall" },
       { t: "6:40 PM", type: "move", title: "To Yeoksam", desc: "Line 2, Samseong → Yeoksam (~10 min) + 5 min walk.", from: "Samseong Station", to: "Yang Good Seoul", ko: "역삼역" },
       { t: "7:00 PM", type: "food", title: "Dinner · Yang Good", desc: "Halal lamb Korean BBQ grilled at the table. 15 Nonhyeon-ro 95-gil. Mon–Fri 4–11 PM.", ko: "양굿", en: "Yang Good Halal BBQ Seoul", halal: "cert", note: "Uses halal meat; serves alcohol to other guests. Reservation recommended." },
       { t: "8:00 PM", type: "move", title: "To Garosugil", desc: "Taxi ~15 min, or subway ~25 min.", from: "Yeoksam Station", to: "Garosu-gil Sinsa-dong", ko: "신사역" },
-      { t: "8:30 PM", type: "place", title: "Garosugil", desc: "Tree-lined boutique shopping street, quieter than Myeongdong.", ko: "가로수길", en: "Garosu-gil Seoul" },
+      { t: "8:30 PM", type: "shop", title: "Garosugil", desc: "Tree-lined boutique shopping street, quieter than Myeongdong.", ko: "가로수길", en: "Garosu-gil Seoul" },
       { t: "9:15 PM", type: "move", title: "Back to Airbnb", desc: "Approx. 50 min.", from: "Sinsa Station", to: "Omokgyo Station Seoul", ko: "오목교역" },
     ],
   },
@@ -413,16 +474,16 @@ const DAYS = [
     route: "Namdaemun Market → Myeongdong → Namsan forest trail → N Seoul Tower → Myeongdong",
     stops: [
       { t: "8:30 AM", type: "move", title: "Breakfast, then to Namdaemun", desc: "Line 5 + Line 4 to Hoehyeon Station. Approx. 45 min.", from: "Omokgyo Station Seoul", to: "Namdaemun Market", ko: "회현역" },
-      { t: "9:30 AM", type: "place", title: "Namdaemun Market", desc: "Souvenirs, snacks and gifts – busiest in the morning.", ko: "남대문시장", en: "Namdaemun Market" },
-      { t: "11:00 AM", type: "place", title: "Myeongdong shopping", desc: "Walk ~10 min. Myeongdong Shopping Street, Olive Young and nearby shops.", ko: "명동거리", en: "Myeongdong Shopping Street" },
+      { t: "9:30 AM", type: "shop", title: "Namdaemun Market", desc: "Souvenirs, snacks and gifts – busiest in the morning.", ko: "남대문시장", en: "Namdaemun Market" },
+      { t: "11:00 AM", type: "shop", title: "Myeongdong shopping", desc: "Walk ~10 min. Myeongdong Shopping Street, Olive Young and nearby shops.", ko: "명동거리", en: "Myeongdong Shopping Street" },
       { t: "12:30 PM", type: "food", title: "Lunch · Jinjin Gejang", desc: "Pork-free, alcohol-free soy-marinated crab (ganjang gejang). 11-6 Myeongdong 8-gil.", ko: "진진게장 명동", en: "Jinjin Gejang Myeongdong", halal: "friendly" },
-      { t: "1:30 PM", type: "place", title: "More Myeongdong shopping", desc: "", ko: "명동", en: "Myeongdong" },
+      { t: "1:30 PM", type: "shop", title: "More Myeongdong shopping", desc: "", ko: "명동", en: "Myeongdong" },
       { t: "3:00 PM", type: "move", title: "Walk to the Namsan cable car base", desc: "Approx. 15 min from Myeongdong.", from: "Myeongdong Station", to: "Namsan Cable Car", ko: "남산케이블카" },
       { t: "3:15 PM", type: "place", title: "Namsan forest trail", desc: "Walk up to N Seoul Tower through autumn foliage, approx. 40–60 min at family pace.", ko: "남산 둘레길", en: "Namsan trail to N Seoul Tower" },
       { t: "4:15 PM", type: "place", title: "N Seoul Tower", desc: "Tower area; sunset ~5:15 PM and night views (5:00–5:45 PM).", ko: "N서울타워", en: "N Seoul Tower" },
       { t: "6:00 PM", type: "move", title: "Down to Myeongdong", desc: "Namsan cable car or bus, then walk. Approx. 25 min.", from: "N Seoul Tower", to: "Busan Jib Myeongdong", ko: "남산케이블카" },
       { t: "6:30 PM", type: "food", title: "Farewell dinner · Busan Jib (Myeongdong)", desc: "Halal-friendly Korean BBQ.", ko: "부산집 명동", en: "Busan Jib Halal Myeongdong", halal: "cert" },
-      { t: "8:00 PM", type: "place", title: "Myeongdong night stalls", desc: "Last-minute souvenirs and street food.", ko: "명동 야시장", en: "Myeongdong night market" },
+      { t: "8:00 PM", type: "shop", title: "Myeongdong night stalls", desc: "Last-minute souvenirs and street food.", ko: "명동 야시장", en: "Myeongdong night market" },
       { t: "9:00 PM", type: "move", title: "Back to Airbnb & pack", desc: "Approx. 45 min.", from: "Myeongdong Station", to: "Omokgyo Station Seoul", ko: "오목교역" },
     ],
   },
@@ -436,6 +497,99 @@ const DAYS = [
       { t: "11:00 AM", type: "stay", title: "Flight to Malaysia", desc: "Departs 11:00 AM.", ko: "인천국제공항", en: "Incheon International Airport" },
     ],
   },
+];
+
+/* =========================================================
+   COSTS  (₩ per person, [low, high]). Keyed by "dayIndex|stop title".
+   group:true = cost for the whole group (e.g. taxis), not per person.
+   ========================================================= */
+const COSTS = {
+  "0|Arrive at Incheon Airport": null,
+  "0|Airport → Airbnb": { k: [4000, 5500], label: "AREX all-stop + Line 5" },
+  "0|To Yeouido": { k: [1550, 1550], label: "Subway" },
+  "0|The Hyundai Seoul": { k: [0, 0], label: "Free to browse" },
+  "0|Lunch · Durga (Yeouido)": { k: [15000, 25000], label: "Curry + rice/naan + drink", est: true },
+  "0|Yeouido Han River Park": { k: [0, 0], label: "Free" },
+  "0|To Sinchon (near Yonsei Univ.)": { k: [1500, 1500], label: "Bus (or 2 taxis ~₩12,000–16,000 total)" },
+  "0|Cafe Pokpo": { k: [6000, 9000], label: "One drink each", est: true },
+  "0|Ewha Womans University street": { k: [0, 0], label: "Free" },
+  "0|To Haneul Park": { k: [1550, 1550], label: "Subway" },
+  "0|Haneul Park – silver grass & sunset": { k: [0, 3000], label: "Free; Frog Tram ~₩3,000 return" },
+  "0|To Hapjeong": { k: [1550, 1550], label: "Subway" },
+  "0|YG Entertainment building": { k: [0, 0], label: "Free (outside only)" },
+  "0|Hongdae": { k: [0, 0], label: "Free" },
+  "0|Dinner · Busan Jib (Hongdae)": { k: [15000, 30000], label: "Korean set / BBQ", est: true },
+  "0|Back to Airbnb": { k: [1550, 1550], label: "Subway" },
+
+  "1|To Seochon": { k: [1550, 1550], label: "Subway" },
+  "1|Seochon hanok lanes": { k: [0, 0], label: "Free" },
+  "1|Tongin Market": { k: [0, 10000], label: "Free; snacks optional" },
+  "1|To Gwanghwamun": { k: [0, 0], label: "Walk" },
+  "1|Lunch · Ildossi Dakgalbi (Gwanghwamun)": { k: [14000, 20000], label: "Dakgalbi + fried rice", est: true },
+  "1|To Anguk + rent hanbok": { k: [15000, 30000], label: "Hanbok rental 2–4 hrs + share of taxi", est: true, cat: "place" },
+  "1|Changdeokgung Palace": { k: [0, 3000], label: "Free in hanbok (₩3,000 without)" },
+  "1|Secret Garden (Huwon) tour": { k: [8000, 8000], label: "Separate ticket – check price when booking" },
+  "1|Return hanbok": null,
+  "1|Walk to Ikseondong": { k: [0, 0], label: "Walk" },
+  "1|Ikseondong + Jayeondo salt bread": { k: [4000, 8000], label: "Salt bread (min. 4 per order) / café", est: true },
+  "1|To Dongdaemun": { k: [1550, 1550], label: "Subway" },
+  "1|Dongdaemun Design Plaza (DDP)": { k: [0, 0], label: "Free outdoors" },
+  "1|To Myeongdong for dinner": { k: [1550, 1550], label: "Subway" },
+  "1|Dinner · Kampungku": { k: [15000, 22000], label: "Fried chicken / bulgogi set", est: true },
+  "1|Back to Dongdaemun": { k: [1550, 1550], label: "Subway" },
+  "1|Back to Airbnb": { k: [1550, 1550], label: "Subway" },
+
+  "2|Breakfast, then to Seongsu": { k: [1650, 1650], label: "Subway (longer ride)" },
+  "2|Lunch · Jojo Kalguksu (Seongsu)": { k: [10000, 15000], label: "Clam noodles ₩9,000; pancake ₩13,000 to share" },
+  "2|Seoul Forest": { k: [0, 0], label: "Free" },
+  "2|To Yongmasan Station": { k: [1550, 1550], label: "Subway" },
+  "2|Walk up to the skywalk": { k: [0, 0], label: "Walk" },
+  "2|Yongmasan Skywalk": { k: [0, 0], label: "Free" },
+  "2|To Itaewon": { k: [5000, 9000], label: "Taxi share (2 taxis ~₩22,000–28,000 each) or subway ₩1,650", est: true },
+  "2|Itaewon & Seoul Central Mosque": { k: [0, 0], label: "Free" },
+  "2|Dinner · EID – Halal Korean Food": { k: [10000, 18000], label: "Bibimbap / bulgogi / samgyetang", est: true },
+  "2|Gyeongridan-gil": { k: [0, 0], label: "Free" },
+  "2|Back to Airbnb": { k: [1550, 1550], label: "Subway" },
+
+  "3|To Seoul Grand Park": { k: [1750, 1750], label: "Subway (longer ride)" },
+  "3|Seoul Grand Park": { k: [14500, 14500], label: "Zoo + Sky Lift + elephant train package" },
+  "3|To Jamsil": { k: [1750, 1750], label: "Subway" },
+  "3|Lunch · Shilla Jemyeon (Lotte World Mall 6F)": { k: [11000, 16000], label: "Kalnakji ₩14,000 / clam noodles ₩11,000" },
+  "3|To Olympic Park": { k: [1550, 1550], label: "Subway" },
+  "3|Seoul Olympic Park": { k: [0, 0], label: "Free" },
+  "3|Songridan-gil": { k: [0, 8000], label: "Free; café optional" },
+  "3|To COEX": { k: [1550, 1550], label: "Subway" },
+  "3|Starfield Library": { k: [0, 0], label: "Free" },
+  "3|To Yeoksam": { k: [1550, 1550], label: "Subway" },
+  "3|Dinner · Yang Good": { k: [30000, 45000], label: "Halal lamb BBQ", est: true },
+  "3|To Garosugil": { k: [3000, 4000], label: "Taxi share or subway", est: true },
+  "3|Back to Airbnb": { k: [1650, 1650], label: "Subway" },
+
+  "4|Breakfast, then to Namdaemun": { k: [1550, 1550], label: "Subway" },
+  "4|Lunch · Jinjin Gejang": { k: [35000, 50000], label: "Soy crab set for 2 ₩98,000", est: false },
+  "4|Walk to the Namsan cable car base": { k: [0, 0], label: "Walk" },
+  "4|Namsan forest trail": { k: [0, 0], label: "Free" },
+  "4|N Seoul Tower": { k: [0, 29000], label: "Free outside; observatory optional ~₩21,000–29,000" },
+  "4|Down to Myeongdong": { k: [1500, 12000], label: "Bus 01A/01B ₩1,500, or cable car one-way ₩12,000" },
+  "4|Farewell dinner · Busan Jib (Myeongdong)": { k: [20000, 35000], label: "Korean BBQ", est: true },
+  "4|Back to Airbnb & pack": { k: [1550, 1550], label: "Subway" },
+
+  "5|To Incheon Airport": { k: [4000, 5500], label: "Line 5 + AREX all-stop" },
+};
+const BREAKFAST = { k: [5000, 8000], label: "Breakfast (convenience store / bakery)", est: true };
+
+/* Suggested shopping allowance per person (₩). Change freely. */
+const SHOPPING = [
+  [ { where: "The Hyundai Seoul", k: [20000, 80000], tip: "Cafés, snacks, small gifts" },
+    { where: "Hongdae", k: [30000, 100000], tip: "Clothes, accessories, K-pop goods" } ],
+  [ { where: "Daiso Dongdaemun", k: [20000, 50000], tip: "Everything ₩500–₩5,000: sheet masks, snacks, travel kits" },
+    { where: "Dongdaemun malls (Doota)", k: [50000, 150000], tip: "Fashion, bags, shoes" } ],
+  [ { where: "Seongsu (Suare, Super Matcha, pop-ups)", k: [50000, 150000], tip: "Clothing, matcha drinks & goods" } ],
+  [ { where: "COEX Mall", k: [30000, 100000], tip: "Stationery, character shops, cosmetics" },
+    { where: "Garosugil", k: [30000, 100000], tip: "Boutique clothing, accessories" } ],
+  [ { where: "Namdaemun Market", k: [30000, 80000], tip: "Souvenirs, kimchi/seaweed snacks, socks, ginseng" },
+    { where: "Myeongdong / Olive Young", k: [50000, 150000], tip: "Skincare & cosmetics (tax refund ₩15,000+)" } ],
+  [],
 ];
 
 const TODOS = [
@@ -461,6 +615,7 @@ const TYPE = {
   food:  { tag: "Food", icon: "🍽️" },
   move:  { tag: "Transport", icon: "🚇" },
   stay:  { tag: "Stay / airport", icon: "🏠" },
+  shop:  { tag: "Shopping", icon: "🛍️" },
 };
 const HALAL = {
   cert: ["b-cert", "Halal / Muslim-owned"],
@@ -543,6 +698,7 @@ function stopHTML(s, dayIdx, stopIdx, showDay) {
       ${s.desc ? `<div class="desc">${esc(s.desc)}</div>` : ""}
       ${halal}
       ${note}
+      ${costChip(dayIdx, s)}
       <div class="links">${links(s)}</div>
     </div>
   </li>`;
@@ -624,6 +780,88 @@ function renderFood() {
   }).join("");
 }
 
+/* ---------- costs ---------- */
+let RATE = store.get("seoul-rate", 329);
+let PAX = store.get("seoul-pax", 5);
+const won = n => "₩" + Math.round(n).toLocaleString("en-US");
+const rm = n => "RM " + (n / RATE).toLocaleString("en-US", { maximumFractionDigits: 0 });
+const range = (a, b, f) => a === b ? f(a) : `${f(a)}–${f(b).replace(/^₩|^RM /, "")}`;
+function costOf(di, s) {
+  if (/^Breakfast|Early breakfast/.test(s.title) && !COSTS[`${di}|${s.title}`]) return BREAKFAST;
+  return COSTS[`${di}|${s.title}`] || null;
+}
+function costChip(di, s) {
+  const c = costOf(di, s);
+  if (!c) return "";
+  const [a, b] = c.k;
+  const price = (a === 0 && b === 0) ? "Free" : `${range(a, b, won)} pp`;
+  return `<div class="cost">💰 ${price}${c.est ? " (est.)" : ""} <small>· ${esc(c.label)}</small></div>`;
+}
+function renderCosts() {
+  document.getElementById("rateIn").value = RATE;
+  document.getElementById("paxIn").value = PAX;
+  let tripLo = { food: 0, place: 0, move: 0 }, tripHi = { food: 0, place: 0, move: 0 }, shopLo = 0, shopHi = 0;
+  const html = DAYS.map((d, di) => {
+    const rows = [];
+    let lo = 0, hi = 0;
+    // breakfast lines for days with a breakfast stop
+    d.stops.forEach(s => {
+      const c = costOf(di, s);
+      if (!c || (c.k[0] === 0 && c.k[1] === 0)) return;
+      const cat = c.cat || (c === BREAKFAST ? "food" : (s.type === "shop" ? "place" : (s.type === "stay" ? "food" : s.type)));
+      const lbl = c === BREAKFAST ? "Breakfast" : s.title;
+      rows.push([cat, lbl, c]);
+    });
+    if (!rows.some(r => r[1] === "Breakfast") && di > 0) rows.unshift(["food", "Breakfast", BREAKFAST]);
+    const body = rows.map(([cat, lbl, c]) => {
+      lo += c.k[0]; hi += c.k[1];
+      tripLo[cat] = (tripLo[cat] || 0) + c.k[0]; tripHi[cat] = (tripHi[cat] || 0) + c.k[1];
+      return `<tr><td><span class="cat ${cat}">${cat === "move" ? "Transport" : cat === "food" ? "Food" : "Ticket"}</span><br>${esc(lbl)}<br><span class="small">${esc(c.label)}${c.est ? " · estimate" : ""}<br>${range(c.k[0], c.k[1], won)} per person</span></td>
+        <td class="num">${range(c.k[0] * PAX, c.k[1] * PAX, won)}<br><span class="small">${range(c.k[0] * PAX, c.k[1] * PAX, rm)}</span></td></tr>`;
+    }).join("");
+    const shop = SHOPPING[di] || [];
+    let sLo = 0, sHi = 0;
+    const shopRows = shop.map(x => { sLo += x.k[0]; sHi += x.k[1];
+      return `<tr><td><span class="cat shop">Shopping (suggested)</span><br>${esc(x.where)}<br><span class="small">${esc(x.tip)}<br>${range(x.k[0], x.k[1], won)} per person</span></td>
+        <td class="num">${range(x.k[0] * PAX, x.k[1] * PAX, won)}<br><span class="small">${range(x.k[0] * PAX, x.k[1] * PAX, rm)}</span></td></tr>`; }).join("");
+    shopLo += sLo; shopHi += sHi;
+    return `<details class="daycost" ${di === state.day ? "open" : ""}>
+      <summary><span>Day ${di + 1} · ${d.label} Nov</span><span>${range(lo * PAX, hi * PAX, rm)} <span class="small">+ shopping</span></span></summary>
+      <div class="body"><table>
+        <thead><tr><th>Item</th><th class="num">${PAX} people</th></tr></thead>
+        <tbody>${body}
+          <tr class="sub"><td>Day total (no shopping)<br><span class="small">${range(lo, hi, won)} per person</span></td><td class="num">${range(lo * PAX, hi * PAX, won)}<br>${range(lo * PAX, hi * PAX, rm)}</td></tr>
+          ${shopRows}
+          ${shop.length ? `<tr class="sub"><td>Shopping allowance<br><span class="small">${range(sLo, sHi, won)} per person</span></td><td class="num">${range(sLo * PAX, sHi * PAX, won)}<br>${range(sLo * PAX, sHi * PAX, rm)}</td></tr>` : ""}
+        </tbody></table></div>
+    </details>`;
+  }).join("");
+  document.getElementById("costDays").innerHTML = html;
+
+  const line = (name, a, b, cls = "") => `<tr class="${cls}"><td>${name}</td><td class="num">${range(a * PAX, b * PAX, rm)}<br><span class="small">${range(a * PAX, b * PAX, won)}</span></td></tr>`;
+  const tLo = tripLo.food + tripLo.place + tripLo.move, tHi = tripHi.food + tripHi.place + tripHi.move;
+  document.getElementById("tripTotal").innerHTML = `
+    <thead><tr><th>For ${PAX} people</th><th style="text-align:right">RM / ₩</th></tr></thead>
+    <tbody>
+      ${line("🍽️ Food (all meals)", tripLo.food, tripHi.food)}
+      ${line("📍 Tickets, hanbok & activities", tripLo.place, tripHi.place)}
+      ${line("🚇 Transport", tripLo.move, tripHi.move)}
+      ${line("Total without shopping", tLo, tHi, "total")}
+      ${line("🛍️ Suggested shopping", shopLo, shopHi)}
+      ${line("Total with shopping", tLo + shopLo, tHi + shopHi, "total")}
+    </tbody>`;
+  renderExpenses();
+}
+let EXP = store.get("seoul-exp", []);
+function renderExpenses() {
+  const sel = document.getElementById("expDay");
+  if (!sel.options.length) { sel.innerHTML = DAYS.map((d, i) => `<option value="${i}">Day ${i + 1} · ${d.label}</option>`).join(""); sel.value = String(state.day); }
+  const total = EXP.reduce((a, e) => a + e.amt, 0);
+  document.getElementById("expSum").innerHTML = EXP.length ? `<b>Spent so far: ${won(total)} (${rm(total)})</b>` : "";
+  const icon = { food: "🍽️", shop: "🛍️", move: "🚇", place: "📍", stay: "🏠" };
+  document.getElementById("expList").innerHTML = EXP.map((e, i) => `<li><span>${icon[e.cat] || ""}</span><span>D${e.day + 1} · ${esc(e.note || "—")}</span><span class="amt">${won(e.amt)}</span><button data-del="${i}" aria-label="Delete">×</button></li>`).reverse().join("");
+}
+
 function renderTodos() {
   document.getElementById("todoList").innerHTML = TODOS.map((t, i) => {
     const done = !!state.todo[i];
@@ -664,6 +902,7 @@ document.querySelector("nav.sections").addEventListener("click", e => {
   const b = e.target.closest("button[data-panel]"); if (!b) return;
   document.querySelectorAll("nav.sections button").forEach(x => x.setAttribute("aria-selected", x === b));
   document.querySelectorAll("section.panel").forEach(p => p.classList.toggle("hidden", p.id !== "panel-" + b.dataset.panel));
+  if (b.dataset.panel === "budget") { renderCosts(); document.getElementById("expDay").value = String(state.day); }
   window.scrollTo({ top: 0 });
 });
 document.getElementById("themeBtn").addEventListener("click", () => {
@@ -673,12 +912,28 @@ document.getElementById("themeBtn").addEventListener("click", () => {
   store.set("seoul-theme", root.dataset.theme);
 });
 
+document.getElementById("rateIn").addEventListener("change", e => { const v = +e.target.value; if (v > 0) { RATE = v; store.set("seoul-rate", v); renderCosts(); } });
+document.getElementById("paxIn").addEventListener("change", e => { const v = Math.round(+e.target.value); if (v > 0) { PAX = v; store.set("seoul-pax", v); renderCosts(); } });
+document.getElementById("expForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const amt = Math.round(+document.getElementById("expAmt").value);
+  if (!amt) return;
+  EXP.push({ day: +document.getElementById("expDay").value, cat: document.getElementById("expCat").value, amt, note: document.getElementById("expNote").value.trim() });
+  store.set("seoul-exp", EXP);
+  document.getElementById("expAmt").value = ""; document.getElementById("expNote").value = "";
+  renderExpenses();
+});
+document.getElementById("expList").addEventListener("click", e => {
+  const b = e.target.closest("button[data-del]"); if (!b) return;
+  EXP.splice(+b.dataset.del, 1); store.set("seoul-exp", EXP); renderExpenses();
+});
+
 /* ---------- start ---------- */
 (function init() {
   const th = store.get("seoul-theme", null);
   if (th) document.documentElement.dataset.theme = th;
   state.day = Math.min(Math.max(pickInitialDay(), 0), DAYS.length - 1);
-  renderClock(); renderTabs(); renderDay(); renderFood(); renderTodos();
+  renderClock(); renderTabs(); renderDay(); renderFood(); renderTodos(); renderCosts();
   setInterval(() => { renderClock(); markNow(); }, 60000);
 })();
 </script>
