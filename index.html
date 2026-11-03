@@ -423,8 +423,12 @@ const DAYS = [
       { t: "5:45 PM", type: "move", title: "To Hapjeong", desc: "Walk down, Line 6 two stops. Approx. 20 min.", from: "World Cup Stadium Station Seoul", to: "Hapjeong Station Seoul", ko: "합정역" },
       { t: "6:15 PM", type: "place", title: "YG Entertainment building", desc: "Exterior photos in Hapjeong.", ko: "YG엔터테인먼트", en: "YG Entertainment Seoul" },
       { t: "6:45 PM", type: "place", title: "Hongdae", desc: "Walk ~10 min; main streets, shops and street performances.", ko: "홍대입구역", en: "Hongdae Seoul" },
-      { t: "7:30 PM", type: "food", title: "Dinner · Busan Jib (Hongdae)", desc: "Halal Korean food.", ko: "부산집 홍대", en: "Busanjib Hongdae halal", halal: "cert",
-        alts: [ { tag: "TikTok pick", name: "Gosame (Hapjeong branch)", desc: "Same grilled-fish restaurant as lunch, 31-6 World Cup-ro 3-gil – about 5 min from YG. 11 AM–9 PM (break 3:00–4:30 PM, last order 8:20 PM). Swap in if you want Gosame for dinner instead of lunch.", ko: "고삼이 합정", en: "Gosame Hapjeong", halal: "friendly" } ] },
+      { t: "7:30 PM", type: "food", title: "Dinner · Chunja Daegutang (Hongdae)", desc: "Korean spicy codfish soup (daegutang). 375-44 Seogyo-dong, Mapo-gu – in Hongdae, about 10–15 min walk from YG / Hapjeong.", ko: "춘자대구탕", en: "Chunja Daegutang Hongdae", halal: "cert",
+        note: "Listed as halal-certified in halal guides, but 2026 opening status and closing time could not be confirmed – search 춘자대구탕 on Naver Map before going. If closed, use Busan Jib Hongdae (below).", warn: true,
+        alts: [
+          { tag: "Backup", name: "Busan Jib (Hongdae branch)", desc: "Halal Korean comfort food – stews, kimchi dumplings, spicy braised tofu (₩10,000–18,000). 2F, 100-6 Eoulmadang-ro. Daily 11 AM–10 PM. Same chain as Day 5 farewell dinner.", ko: "부산집 홍대", en: "Busanjib Hongdae halal", halal: "cert" },
+          { tag: "TikTok pick", name: "Gosame (Hapjeong branch)", desc: "Same grilled-fish restaurant as lunch, 31-6 World Cup-ro 3-gil – about 5 min from YG. 11 AM–9 PM (break 3:00–4:30 PM, last order 8:20 PM).", ko: "고삼이 합정", en: "Gosame Hapjeong", halal: "friendly" }
+        ] },
       { t: "8:30 PM", type: "shop", title: "Hongdae night shopping", desc: "More time around Hongdae.", ko: "홍대 걷고싶은거리", en: "Hongdae shopping street" },
       { t: "9:30 PM", type: "move", title: "Back to Airbnb", desc: "Line 2 + Line 5, approx. 35 min.", from: "Hongik University Station", to: "Omokgyo Station Seoul", ko: "오목교역" },
     ],
@@ -441,7 +445,7 @@ const DAYS = [
       { t: "12:00 PM", type: "food", title: "Lunch · Ildossi Dakgalbi (Gwanghwamun)", desc: "Halal-certified Korean spicy stir-fried chicken. B2, 136 Sejong-daero. Daily 10 AM–10 PM.", ko: "일도씨닭갈비 광화문점", en: "Ildossi Dakgalbi Gwanghwamun", halal: "cert" },
       { t: "1:00 PM", type: "move", title: "To Anguk + rent hanbok", desc: "Taxi ~10 min. Rent hanbok at a shop near Changdeokgung / Anguk Station.", from: "Ildossi Dakgalbi Gwanghwamun", to: "Anguk Station Seoul", ko: "안국역 한복대여" },
       { t: "1:30 PM", type: "place", title: "Changdeokgung Palace", desc: "Palace grounds in hanbok (free entry in hanbok).", ko: "창덕궁", en: "Changdeokgung Palace" },
-      { t: "2:30 PM", type: "place", title: "Secret Garden (Huwon) tour", desc: "English guided tour, approx. 90 min.", ko: "창덕궁 후원", en: "Changdeokgung Secret Garden", note: "Book online in advance. Separate ticket (~₩5,000) needed even in hanbok.", warn: true },
+      { t: "2:30 PM", type: "place", title: "Secret Garden (Huwon) tour", desc: "English guided tour, approx. 90 min.", ko: "창덕궁 후원", en: "Changdeokgung Secret Garden", note: "Book online in advance. Separate ticket (₩8,000 – check price when booking) needed even in hanbok.", warn: true },
       { t: "4:00 PM", type: "place", title: "Return hanbok", desc: "", ko: "안국역 한복대여", en: "hanbok rental Anguk" },
       { t: "4:30 PM", type: "move", title: "Walk to Ikseondong", desc: "Approx. 10 min.", from: "Changdeokgung Palace", to: "Ikseon-dong Hanok Street", ko: "익선동 한옥거리" },
       { t: "4:45 PM", type: "place", title: "Ikseondong + Jayeondo salt bread", desc: "Hanok alleys, cafés, boutiques. Salt bread batch at 5:00 PM (min. 4 pieces).", ko: "자연도소금빵 익선", en: "Jayeondo Salt Bread Ikseon-dong" },
@@ -482,7 +486,7 @@ const DAYS = [
   },
   {
     date: "2026-11-19", label: "Thu 19", title: "Day 4 · Parks & Gangnam",
-    route: "Seoul Grand Park → Jamsil → Olympic Park → Songridan-gil → COEX → Yeoksam → Garosugil",
+    route: "Seoul Grand Park → Jamsil → Olympic Park → Songridan-gil → COEX → Garosugil",
     stops: [
       { t: "7:00 AM", type: "stay", title: "Early breakfast", desc: "", ko: "오목교역", en: "Omokgyo Station Seoul" },
       { t: "7:30 AM", type: "move", title: "To Seoul Grand Park", desc: "Line 5 + Line 2 + Line 4, approx. 60–70 min.", from: "Omokgyo Station Seoul", to: "Seoul Grand Park Station", ko: "대공원역" },
@@ -551,7 +555,7 @@ const COSTS = {
   "0|To Hapjeong": { k: [0, 0], label: "Covered by Climate Card" },
   "0|YG Entertainment building": { k: [0, 0], label: "Free (outside only)" },
   "0|Hongdae": { k: [0, 0], label: "Free" },
-  "0|Dinner · Busan Jib (Hongdae)": { k: [15000, 30000], label: "Korean set / BBQ", est: true },
+  "0|Dinner · Chunja Daegutang (Hongdae)": { k: [10000, 15000], label: "Codfish soup with rice and side dishes", est: true },
   "0|Back to Airbnb": { k: [0, 0], label: "Covered by Climate Card" },
 
   "1|To Seochon": { k: [0, 0], label: "Covered by Climate Card" },
