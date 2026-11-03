@@ -301,7 +301,7 @@
     <h3>Where we stay</h3>
     <div class="rcard">
       <div class="r-name">Airbnb – Omok-ro, Yangcheon-gu</div>
-      <div class="small">All 5 nights, no change. Nearest station: Omokgyo (Line 5). Airport route: Line 5 ↔ Gimpo Airport ↔ AREX airport railway ↔ Incheon (approx. 1 hr 10 min).</div>
+      <div class="small">All 5 nights, no change. Nearest station: Omokgyo (Line 5). Airport transfers: pre-booked minivan both ways (16 Nov arrival, 21 Nov departure), ₩95,000 per trip, approx. 1 hr by road.</div>
       <div class="links" id="stayLinks"></div>
     </div>
 
@@ -326,17 +326,16 @@
   <!-- COSTS -->
   <section class="panel hidden" id="panel-budget">
     <h2>Costs by day</h2>
-    <p class="small">Estimated prices for every place, meal and ride on the plan, plus a suggested shopping allowance. Tap a day to open it. Prices are approximate (2026) and can change.</p>
+    <p class="small">All amounts are <b>per person</b>. Estimated prices for every place, meal and ride on the plan, plus a suggested shopping allowance. Tap a day to open it. Prices are approximate (2026) and can change; the airport minivans are booked and fixed.</p>
     <div class="rate">
       <label>RM 1 = ₩ <input id="rateIn" type="number" inputmode="decimal" min="100" max="1000" step="1"></label>
-      <label>People <input id="paxIn" type="number" inputmode="numeric" min="1" max="20" step="1"></label>
       <span class="small">Rate default ₩329 (2 Nov 2026). Change it to your money changer's rate.</span>
     </div>
     <div id="costDays"></div>
 
     <h3>Whole trip (in Korea)</h3>
     <table class="simple" id="tripTotal"></table>
-    <p class="small">Transport counts one subway fare per person per ride. A normal taxi takes 4 people, so 5 people need 2 taxis or one large “Venti” taxi (Kakao T app) – taxi costs here assume 2 taxis.</p>
+    <p class="small">Transport counts one subway fare per person per ride. Shared costs are split between 5 people: the airport minivan (₩95,000 each way = ₩19,000 each) and taxis (5 people need 2 taxis or one large “Venti” taxi in the Kakao T app).</p>
 
     <h3>Track what you actually spend</h3>
     <form class="exp-form" id="expForm">
@@ -384,7 +383,7 @@ const DAYS = [
     route: "Incheon → Yeouido → Sinchon / Ewha → Haneul Park → Hapjeong / Hongdae",
     stops: [
       { t: "8:00 AM", type: "stay", title: "Arrive at Incheon Airport", desc: "Immigration and baggage collection.", ko: "인천국제공항", en: "Incheon International Airport" },
-      { t: "9:15 AM", type: "move", title: "Airport → Airbnb", desc: "AREX airport railway to Gimpo Airport, then Line 5 to Omokgyo. Approx. 1 hr 10 min.", from: "Incheon International Airport", to: "Omokgyo Station Seoul", ko: "오목교역" },
+      { t: "9:15 AM", type: "move", title: "Airport → Airbnb", desc: "Pre-booked airport transfer by minivan, door to door. Approx. 1 hr by road.", from: "Incheon International Airport", to: "Omokgyo Station Seoul", ko: "오목교역", mode: "driving", note: "Booked: ₩95,000 per minivan (fixed)." },
       { t: "10:30 AM", type: "stay", title: "Check in / drop luggage", desc: "Freshen up at the Airbnb.", ko: "오목교역", en: "Omokgyo Station Seoul" },
       { t: "11:15 AM", type: "move", title: "To Yeouido", desc: "Line 5, approx. 15 min.", from: "Omokgyo Station Seoul", to: "The Hyundai Seoul", ko: "더현대 서울" },
       { t: "11:30 AM", type: "shop", title: "The Hyundai Seoul", desc: "Indoor shopping and cafés.", ko: "더현대 서울", en: "The Hyundai Seoul" },
@@ -492,7 +491,7 @@ const DAYS = [
     route: "Airbnb → Incheon Airport → Malaysia (11:00 AM)",
     stops: [
       { t: "6:30 AM", type: "stay", title: "Breakfast & check out", desc: "", ko: "오목교역", en: "Omokgyo Station Seoul" },
-      { t: "7:00 AM", type: "move", title: "To Incheon Airport", desc: "Line 5 to Gimpo Airport, then AREX airport railway. Approx. 1 hr 10 min.", from: "Omokgyo Station Seoul", to: "Incheon International Airport", ko: "인천국제공항" },
+      { t: "7:00 AM", type: "move", title: "To Incheon Airport", desc: "Pre-booked airport transfer by minivan from the Airbnb. Approx. 1 hr by road.", from: "Omokgyo Station Seoul", to: "Incheon International Airport", ko: "인천국제공항", mode: "driving", note: "Booked: ₩95,000 per minivan (fixed)." },
       { t: "8:15 AM", type: "stay", title: "Airport check-in & security", desc: "Approximate arrival time.", ko: "인천국제공항", en: "Incheon International Airport" },
       { t: "11:00 AM", type: "stay", title: "Flight to Malaysia", desc: "Departs 11:00 AM.", ko: "인천국제공항", en: "Incheon International Airport" },
     ],
@@ -505,7 +504,7 @@ const DAYS = [
    ========================================================= */
 const COSTS = {
   "0|Arrive at Incheon Airport": null,
-  "0|Airport → Airbnb": { k: [4000, 5500], label: "AREX all-stop + Line 5" },
+  "0|Airport → Airbnb": { k: [19000, 19000], label: "Booked minivan ₩95,000 ÷ 5 people", fixed: true },
   "0|To Yeouido": { k: [1550, 1550], label: "Subway" },
   "0|The Hyundai Seoul": { k: [0, 0], label: "Free to browse" },
   "0|Lunch · Durga (Yeouido)": { k: [15000, 25000], label: "Curry + rice/naan + drink", est: true },
@@ -574,7 +573,7 @@ const COSTS = {
   "4|Farewell dinner · Busan Jib (Myeongdong)": { k: [20000, 35000], label: "Korean BBQ", est: true },
   "4|Back to Airbnb & pack": { k: [1550, 1550], label: "Subway" },
 
-  "5|To Incheon Airport": { k: [4000, 5500], label: "Line 5 + AREX all-stop" },
+  "5|To Incheon Airport": { k: [19000, 19000], label: "Booked minivan ₩95,000 ÷ 5 people", fixed: true },
 };
 const BREAKFAST = { k: [5000, 8000], label: "Breakfast (convenience store / bakery)", est: true };
 
@@ -594,6 +593,7 @@ const SHOPPING = [
 
 const TODOS = [
   "Book Changdeokgung Secret Garden English tour (Tue 17 Nov, 2:30 PM) online",
+  "Confirm minivan pick-ups: Incheon arrivals 16 Nov (flight lands ~8:00 AM) and Airbnb 21 Nov at 7:00 AM; save the driver's contact",
   "Reserve Yang Good for Thu 19 Nov dinner (7:00 PM)",
   "Buy / top up T-money cards for 5 people",
   "Install Naver Map or KakaoMap and Papago",
@@ -641,7 +641,7 @@ function links(s) {
   const out = [];
   const ko = s.ko || s.en, en = s.en || s.ko;
   if (s.type === "move" && s.from && s.to) {
-    out.push(["🧭 Directions (Google)", `https://www.google.com/maps/dir/?api=1&origin=${enc(s.from)}&destination=${enc(s.to)}&travelmode=transit`]);
+    out.push(["🧭 Directions (Google)", `https://www.google.com/maps/dir/?api=1&origin=${enc(s.from)}&destination=${enc(s.to)}&travelmode=${s.mode || "transit"}`]);
     out.push(["Naver: destination", `https://map.naver.com/p/search/${enc(ko)}`]);
     out.push(["Kakao: destination", `https://map.kakao.com/link/search/${enc(ko)}`]);
   } else {
@@ -782,7 +782,7 @@ function renderFood() {
 
 /* ---------- costs ---------- */
 let RATE = store.get("seoul-rate", 329);
-let PAX = store.get("seoul-pax", 5);
+const PAX = 5; // only used to split shared costs (minivan, taxis)
 const won = n => "₩" + Math.round(n).toLocaleString("en-US");
 const rm = n => "RM " + (n / RATE).toLocaleString("en-US", { maximumFractionDigits: 0 });
 const range = (a, b, f) => a === b ? f(a) : `${f(a)}–${f(b).replace(/^₩|^RM /, "")}`;
@@ -795,57 +795,56 @@ function costChip(di, s) {
   if (!c) return "";
   const [a, b] = c.k;
   const price = (a === 0 && b === 0) ? "Free" : `${range(a, b, won)} pp`;
-  return `<div class="cost">💰 ${price}${c.est ? " (est.)" : ""} <small>· ${esc(c.label)}</small></div>`;
+  return `<div class="cost">💰 ${price}${c.fixed ? " (booked)" : c.est ? " (est.)" : ""} <small>· ${esc(c.label)}</small></div>`;
 }
 function renderCosts() {
   document.getElementById("rateIn").value = RATE;
-  document.getElementById("paxIn").value = PAX;
   let tripLo = { food: 0, place: 0, move: 0 }, tripHi = { food: 0, place: 0, move: 0 }, shopLo = 0, shopHi = 0;
+  const amt = (a, b) => `${range(a, b, won)}<br><span class="small">${range(a, b, rm)}</span>`;
   const html = DAYS.map((d, di) => {
     const rows = [];
     let lo = 0, hi = 0;
-    // breakfast lines for days with a breakfast stop
     d.stops.forEach(s => {
       const c = costOf(di, s);
       if (!c || (c.k[0] === 0 && c.k[1] === 0)) return;
       const cat = c.cat || (c === BREAKFAST ? "food" : (s.type === "shop" ? "place" : (s.type === "stay" ? "food" : s.type)));
-      const lbl = c === BREAKFAST ? "Breakfast" : s.title;
-      rows.push([cat, lbl, c]);
+      rows.push([cat, c === BREAKFAST ? "Breakfast" : s.title, c]);
     });
     if (!rows.some(r => r[1] === "Breakfast") && di > 0) rows.unshift(["food", "Breakfast", BREAKFAST]);
     const body = rows.map(([cat, lbl, c]) => {
       lo += c.k[0]; hi += c.k[1];
-      tripLo[cat] = (tripLo[cat] || 0) + c.k[0]; tripHi[cat] = (tripHi[cat] || 0) + c.k[1];
-      return `<tr><td><span class="cat ${cat}">${cat === "move" ? "Transport" : cat === "food" ? "Food" : "Ticket"}</span><br>${esc(lbl)}<br><span class="small">${esc(c.label)}${c.est ? " · estimate" : ""}<br>${range(c.k[0], c.k[1], won)} per person</span></td>
-        <td class="num">${range(c.k[0] * PAX, c.k[1] * PAX, won)}<br><span class="small">${range(c.k[0] * PAX, c.k[1] * PAX, rm)}</span></td></tr>`;
+      tripLo[cat] += c.k[0]; tripHi[cat] += c.k[1];
+      const tag = c.fixed ? " · booked" : c.est ? " · estimate" : "";
+      return `<tr><td><span class="cat ${cat}">${cat === "move" ? "Transport" : cat === "food" ? "Food" : "Ticket"}</span><br>${esc(lbl)}<br><span class="small">${esc(c.label)}${tag}</span></td>
+        <td class="num">${amt(c.k[0], c.k[1])}</td></tr>`;
     }).join("");
     const shop = SHOPPING[di] || [];
     let sLo = 0, sHi = 0;
     const shopRows = shop.map(x => { sLo += x.k[0]; sHi += x.k[1];
-      return `<tr><td><span class="cat shop">Shopping (suggested)</span><br>${esc(x.where)}<br><span class="small">${esc(x.tip)}<br>${range(x.k[0], x.k[1], won)} per person</span></td>
-        <td class="num">${range(x.k[0] * PAX, x.k[1] * PAX, won)}<br><span class="small">${range(x.k[0] * PAX, x.k[1] * PAX, rm)}</span></td></tr>`; }).join("");
+      return `<tr><td><span class="cat shop">Shopping (suggested)</span><br>${esc(x.where)}<br><span class="small">${esc(x.tip)}</span></td>
+        <td class="num">${amt(x.k[0], x.k[1])}</td></tr>`; }).join("");
     shopLo += sLo; shopHi += sHi;
     return `<details class="daycost" ${di === state.day ? "open" : ""}>
-      <summary><span>Day ${di + 1} · ${d.label} Nov</span><span>${range(lo * PAX, hi * PAX, rm)} <span class="small">+ shopping</span></span></summary>
+      <summary><span>Day ${di + 1} · ${d.label} Nov</span><span>${range(lo, hi, rm)} <span class="small">pp${shop.length ? " + shopping" : ""}</span></span></summary>
       <div class="body"><table>
-        <thead><tr><th>Item</th><th class="num">${PAX} people</th></tr></thead>
+        <thead><tr><th>Item</th><th class="num">Per person</th></tr></thead>
         <tbody>${body}
-          <tr class="sub"><td>Day total (no shopping)<br><span class="small">${range(lo, hi, won)} per person</span></td><td class="num">${range(lo * PAX, hi * PAX, won)}<br>${range(lo * PAX, hi * PAX, rm)}</td></tr>
+          <tr class="sub"><td>Day total (no shopping)</td><td class="num">${amt(lo, hi)}</td></tr>
           ${shopRows}
-          ${shop.length ? `<tr class="sub"><td>Shopping allowance<br><span class="small">${range(sLo, sHi, won)} per person</span></td><td class="num">${range(sLo * PAX, sHi * PAX, won)}<br>${range(sLo * PAX, sHi * PAX, rm)}</td></tr>` : ""}
+          ${shop.length ? `<tr class="sub"><td>Shopping allowance</td><td class="num">${amt(sLo, sHi)}</td></tr>` : ""}
         </tbody></table></div>
     </details>`;
   }).join("");
   document.getElementById("costDays").innerHTML = html;
 
-  const line = (name, a, b, cls = "") => `<tr class="${cls}"><td>${name}</td><td class="num">${range(a * PAX, b * PAX, rm)}<br><span class="small">${range(a * PAX, b * PAX, won)}</span></td></tr>`;
+  const line = (name, a, b, cls = "") => `<tr class="${cls}"><td>${name}</td><td class="num">${range(a, b, rm)}<br><span class="small">${range(a, b, won)}</span></td></tr>`;
   const tLo = tripLo.food + tripLo.place + tripLo.move, tHi = tripHi.food + tripHi.place + tripHi.move;
   document.getElementById("tripTotal").innerHTML = `
-    <thead><tr><th>For ${PAX} people</th><th style="text-align:right">RM / ₩</th></tr></thead>
+    <thead><tr><th>Per person</th><th style="text-align:right">RM / ₩</th></tr></thead>
     <tbody>
       ${line("🍽️ Food (all meals)", tripLo.food, tripHi.food)}
       ${line("📍 Tickets, hanbok & activities", tripLo.place, tripHi.place)}
-      ${line("🚇 Transport", tripLo.move, tripHi.move)}
+      ${line("🚇 Transport (incl. airport minivans)", tripLo.move, tripHi.move)}
       ${line("Total without shopping", tLo, tHi, "total")}
       ${line("🛍️ Suggested shopping", shopLo, shopHi)}
       ${line("Total with shopping", tLo + shopLo, tHi + shopHi, "total")}
@@ -913,7 +912,6 @@ document.getElementById("themeBtn").addEventListener("click", () => {
 });
 
 document.getElementById("rateIn").addEventListener("change", e => { const v = +e.target.value; if (v > 0) { RATE = v; store.set("seoul-rate", v); renderCosts(); } });
-document.getElementById("paxIn").addEventListener("change", e => { const v = Math.round(+e.target.value); if (v > 0) { PAX = v; store.set("seoul-pax", v); renderCosts(); } });
 document.getElementById("expForm").addEventListener("submit", e => {
   e.preventDefault();
   const amt = Math.round(+document.getElementById("expAmt").value);
