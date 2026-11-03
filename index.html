@@ -312,7 +312,7 @@
       <li>Seoul Grand Park zoo closes at <b>5:00 PM</b> in November (last entry 4:00 PM).</li>
       <li>Jayeondo salt bread: fresh batches at 9:00, 12:30, 2:00, 3:30, 5:00 and 6:30; minimum order 4 pieces.</li>
       <li>Naver Map and KakaoMap are more accurate than Google Maps for walking and subway directions in Korea.</li>
-      <li>A transport card (T-money) works on all subways, buses and most taxis.</li>
+      <li><b>Climate Card</b> (5-day pass, 16–20 Nov) gives unlimited Seoul subway and Seoul buses, including Namsan buses 01A/01B. It does <b>not</b> cover taxis, the Namsan cable car, Shinbundang Line or Gyeonggi buses. Seoul Grand Park station (Gwacheon) may not be covered – check before Day 4.</li>
     </ul>
 
     <h3>Emergency &amp; help</h3>
@@ -331,11 +331,29 @@
       <label>RM 1 = ₩ <input id="rateIn" type="number" inputmode="decimal" min="100" max="1000" step="1"></label>
       <span class="small">Rate default ₩329 (2 Nov 2026). Change it to your money changer's rate.</span>
     </div>
+    <div class="rcard" style="margin-top:12px">
+      <div class="r-name">🚇 Climate Card – how much to top up</div>
+      <table class="simple" style="margin-top:8px">
+        <tbody>
+          <tr><td>Card (one-time, per person)</td><td class="num">₩3,000</td></tr>
+          <tr><td>5-day pass, 16–20 Nov (per person)</td><td class="num">₩15,000</td></tr>
+          <tr class="total"><td>Per person</td><td class="num">₩18,000<br><span class="small" id="ccRm"></span></td></tr>
+          <tr class="total"><td>Family of 5</td><td class="num">₩90,000<br><span class="small" id="ccRm5"></span></td></tr>
+        </tbody>
+      </table>
+      <ul class="small" style="margin:8px 0 0; padding-left:18px">
+        <li><b>Why 5 days:</b> you ride the subway 16–20 Nov. On 21 Nov you use the minivan, so no pass is needed.</li>
+        <li><b>When to buy:</b> on 16 Nov at Omokgyo Station, before your first ride. You can't charge in advance. A pass day lasts until the last train that night.</li>
+        <li><b>Saving:</b> paying each ride separately would cost about ₩30,000–35,000 per person, so the pass saves roughly ₩12,000–17,000 each.</li>
+        <li><b>Not covered:</b> taxis, Namsan cable car, Shinbundang Line, Gyeonggi/red buses. Seoul Grand Park station (Gwacheon) may need a separate single ticket (~₩1,750) each way on Day 4.</li>
+        <li>The Climate Card is reported to give 50% off Seoul Grand Park admission – ask at the ticket booth.</li>
+      </ul>
+    </div>
     <div id="costDays"></div>
 
     <h3>Whole trip (in Korea)</h3>
     <table class="simple" id="tripTotal"></table>
-    <p class="small">Transport counts one subway fare per person per ride. Shared costs are split between 5 people: the airport minivan (₩95,000 each way = ₩19,000 each) and taxis (5 people need 2 taxis or one large “Venti” taxi in the Kakao T app).</p>
+    <p class="small">Subway and Seoul buses are covered by the Climate Card (₩18,000 each). Shared costs are split between 5 people: the airport minivan (₩95,000 each way = ₩19,000 each) and taxis (5 people need 2 taxis or one large “Venti” taxi in the Kakao T app).</p>
 
     <h3>Track what you actually spend</h3>
     <form class="exp-form" id="expForm">
@@ -385,6 +403,7 @@ const DAYS = [
       { t: "8:00 AM", type: "stay", title: "Arrive at Incheon Airport", desc: "Immigration and baggage collection.", ko: "인천국제공항", en: "Incheon International Airport" },
       { t: "9:15 AM", type: "move", title: "Airport → Airbnb", desc: "Pre-booked airport transfer by minivan, door to door. Approx. 1 hr by road.", from: "Incheon International Airport", to: "Omokgyo Station Seoul", ko: "오목교역", mode: "driving", note: "Booked: ₩95,000 per minivan (fixed)." },
       { t: "10:30 AM", type: "stay", title: "Check in / drop luggage", desc: "Freshen up at the Airbnb.", ko: "오목교역", en: "Omokgyo Station Seoul" },
+      { t: "11:00 AM", type: "move", title: "Buy Climate Cards at Omokgyo Station", desc: "At the ticket machine: choose English → Climate Card. Buy 5 cards (₩3,000 each) and charge each with the 5-day pass (₩15,000). Covers 16–20 Nov.", ko: "오목교역", en: "Omokgyo Station Seoul", note: "Visa/Mastercard work at Line 1–8 machines (small foreign-card fee may apply). Bring ₩90,000 cash as backup." },
       { t: "11:15 AM", type: "move", title: "To Yeouido", desc: "Line 5, approx. 15 min.", from: "Omokgyo Station Seoul", to: "The Hyundai Seoul", ko: "더현대 서울" },
       { t: "11:30 AM", type: "shop", title: "The Hyundai Seoul", desc: "Indoor shopping and cafés.", ko: "더현대 서울", en: "The Hyundai Seoul" },
       { t: "12:30 PM", type: "food", title: "Lunch · Durga (Yeouido)", desc: "Muslim-owned, halal Indian food. No pork or lard. ~10 min walk from The Hyundai Seoul.", ko: "두르가 여의도", en: "Durga Yeouido Seoul", halal: "cert" },
@@ -505,22 +524,22 @@ const DAYS = [
 const COSTS = {
   "0|Arrive at Incheon Airport": null,
   "0|Airport → Airbnb": { k: [19000, 19000], label: "Booked minivan ₩95,000 ÷ 5 people", fixed: true },
-  "0|To Yeouido": { k: [1550, 1550], label: "Subway" },
+  "0|To Yeouido": { k: [0, 0], label: "Covered by Climate Card" },
   "0|The Hyundai Seoul": { k: [0, 0], label: "Free to browse" },
   "0|Lunch · Durga (Yeouido)": { k: [15000, 25000], label: "Curry + rice/naan + drink", est: true },
   "0|Yeouido Han River Park": { k: [0, 0], label: "Free" },
-  "0|To Sinchon (near Yonsei Univ.)": { k: [1500, 1500], label: "Bus (or 2 taxis ~₩12,000–16,000 total)" },
+  "0|To Sinchon (near Yonsei Univ.)": { k: [0, 0], label: "Seoul bus covered by Climate Card (taxi would be extra)" },
   "0|Cafe Pokpo": { k: [6000, 9000], label: "One drink each", est: true },
   "0|Ewha Womans University street": { k: [0, 0], label: "Free" },
-  "0|To Haneul Park": { k: [1550, 1550], label: "Subway" },
+  "0|To Haneul Park": { k: [0, 0], label: "Covered by Climate Card" },
   "0|Haneul Park – silver grass & sunset": { k: [0, 3000], label: "Free; Frog Tram ~₩3,000 return" },
-  "0|To Hapjeong": { k: [1550, 1550], label: "Subway" },
+  "0|To Hapjeong": { k: [0, 0], label: "Covered by Climate Card" },
   "0|YG Entertainment building": { k: [0, 0], label: "Free (outside only)" },
   "0|Hongdae": { k: [0, 0], label: "Free" },
   "0|Dinner · Busan Jib (Hongdae)": { k: [15000, 30000], label: "Korean set / BBQ", est: true },
-  "0|Back to Airbnb": { k: [1550, 1550], label: "Subway" },
+  "0|Back to Airbnb": { k: [0, 0], label: "Covered by Climate Card" },
 
-  "1|To Seochon": { k: [1550, 1550], label: "Subway" },
+  "1|To Seochon": { k: [0, 0], label: "Covered by Climate Card" },
   "1|Seochon hanok lanes": { k: [0, 0], label: "Free" },
   "1|Tongin Market": { k: [0, 10000], label: "Free; snacks optional" },
   "1|To Gwanghwamun": { k: [0, 0], label: "Walk" },
@@ -531,50 +550,51 @@ const COSTS = {
   "1|Return hanbok": null,
   "1|Walk to Ikseondong": { k: [0, 0], label: "Walk" },
   "1|Ikseondong + Jayeondo salt bread": { k: [4000, 8000], label: "Salt bread (min. 4 per order) / café", est: true },
-  "1|To Dongdaemun": { k: [1550, 1550], label: "Subway" },
+  "1|To Dongdaemun": { k: [0, 0], label: "Covered by Climate Card" },
   "1|Dongdaemun Design Plaza (DDP)": { k: [0, 0], label: "Free outdoors" },
-  "1|To Myeongdong for dinner": { k: [1550, 1550], label: "Subway" },
+  "1|To Myeongdong for dinner": { k: [0, 0], label: "Covered by Climate Card" },
   "1|Dinner · Kampungku": { k: [15000, 22000], label: "Fried chicken / bulgogi set", est: true },
-  "1|Back to Dongdaemun": { k: [1550, 1550], label: "Subway" },
-  "1|Back to Airbnb": { k: [1550, 1550], label: "Subway" },
+  "1|Back to Dongdaemun": { k: [0, 0], label: "Covered by Climate Card" },
+  "1|Back to Airbnb": { k: [0, 0], label: "Covered by Climate Card" },
 
-  "2|Breakfast, then to Seongsu": { k: [1650, 1650], label: "Subway (longer ride)" },
+  "2|Breakfast, then to Seongsu": { k: [0, 0], label: "Covered by Climate Card" },
   "2|Lunch · Jojo Kalguksu (Seongsu)": { k: [10000, 15000], label: "Clam noodles ₩9,000; pancake ₩13,000 to share" },
   "2|Seoul Forest": { k: [0, 0], label: "Free" },
-  "2|To Yongmasan Station": { k: [1550, 1550], label: "Subway" },
+  "2|To Yongmasan Station": { k: [0, 0], label: "Covered by Climate Card" },
   "2|Walk up to the skywalk": { k: [0, 0], label: "Walk" },
   "2|Yongmasan Skywalk": { k: [0, 0], label: "Free" },
-  "2|To Itaewon": { k: [5000, 9000], label: "Taxi share (2 taxis ~₩22,000–28,000 each) or subway ₩1,650", est: true },
+  "2|To Itaewon": { k: [0, 9000], label: "Subway free with Climate Card; taxi share ~₩5,000–9,000 if you take 2 taxis", est: true },
   "2|Itaewon & Seoul Central Mosque": { k: [0, 0], label: "Free" },
   "2|Dinner · EID – Halal Korean Food": { k: [10000, 18000], label: "Bibimbap / bulgogi / samgyetang", est: true },
   "2|Gyeongridan-gil": { k: [0, 0], label: "Free" },
-  "2|Back to Airbnb": { k: [1550, 1550], label: "Subway" },
+  "2|Back to Airbnb": { k: [0, 0], label: "Covered by Climate Card" },
 
-  "3|To Seoul Grand Park": { k: [1750, 1750], label: "Subway (longer ride)" },
+  "3|To Seoul Grand Park": { k: [0, 2050], label: "Gwacheon is outside Seoul – may not be covered; if not, buy a single ticket (~₩1,750 + ₩500 refundable deposit)" },
   "3|Seoul Grand Park": { k: [14500, 14500], label: "Zoo + Sky Lift + elephant train package" },
-  "3|To Jamsil": { k: [1750, 1750], label: "Subway" },
+  "3|To Jamsil": { k: [0, 2050], label: "Boarding in Gwacheon – may not be covered; if not, single ticket ~₩1,750" },
   "3|Lunch · Shilla Jemyeon (Lotte World Mall 6F)": { k: [11000, 16000], label: "Kalnakji ₩14,000 / clam noodles ₩11,000" },
-  "3|To Olympic Park": { k: [1550, 1550], label: "Subway" },
+  "3|To Olympic Park": { k: [0, 0], label: "Covered by Climate Card" },
   "3|Seoul Olympic Park": { k: [0, 0], label: "Free" },
   "3|Songridan-gil": { k: [0, 8000], label: "Free; café optional" },
-  "3|To COEX": { k: [1550, 1550], label: "Subway" },
+  "3|To COEX": { k: [0, 0], label: "Covered by Climate Card" },
   "3|Starfield Library": { k: [0, 0], label: "Free" },
-  "3|To Yeoksam": { k: [1550, 1550], label: "Subway" },
+  "3|To Yeoksam": { k: [0, 0], label: "Covered by Climate Card" },
   "3|Dinner · Yang Good": { k: [30000, 45000], label: "Halal lamb BBQ", est: true },
-  "3|To Garosugil": { k: [3000, 4000], label: "Taxi share or subway", est: true },
-  "3|Back to Airbnb": { k: [1650, 1650], label: "Subway" },
+  "3|To Garosugil": { k: [0, 4000], label: "Subway free with Climate Card; taxi share ~₩3,000–4,000", est: true },
+  "3|Back to Airbnb": { k: [0, 0], label: "Covered by Climate Card" },
 
-  "4|Breakfast, then to Namdaemun": { k: [1550, 1550], label: "Subway" },
+  "4|Breakfast, then to Namdaemun": { k: [0, 0], label: "Covered by Climate Card" },
   "4|Lunch · Jinjin Gejang": { k: [35000, 50000], label: "Soy crab set for 2 ₩98,000", est: false },
   "4|Walk to the Namsan cable car base": { k: [0, 0], label: "Walk" },
   "4|Namsan forest trail": { k: [0, 0], label: "Free" },
   "4|N Seoul Tower": { k: [0, 29000], label: "Free outside; observatory optional ~₩21,000–29,000" },
-  "4|Down to Myeongdong": { k: [1500, 12000], label: "Bus 01A/01B ₩1,500, or cable car one-way ₩12,000" },
+  "4|Down to Myeongdong": { k: [0, 12000], label: "Namsan bus 01A/01B free with Climate Card, or cable car one-way ₩12,000" },
   "4|Farewell dinner · Busan Jib (Myeongdong)": { k: [20000, 35000], label: "Korean BBQ", est: true },
-  "4|Back to Airbnb & pack": { k: [1550, 1550], label: "Subway" },
+  "4|Back to Airbnb & pack": { k: [0, 0], label: "Covered by Climate Card" },
 
   "5|To Incheon Airport": { k: [19000, 19000], label: "Booked minivan ₩95,000 ÷ 5 people", fixed: true },
 };
+COSTS["0|Buy Climate Cards at Omokgyo Station"] = { k: [18000, 18000], label: "₩3,000 card + ₩15,000 five-day pass", fixed: true, cat: "move" };
 const BREAKFAST = { k: [5000, 8000], label: "Breakfast (convenience store / bakery)", est: true };
 
 /* Suggested shopping allowance per person (₩). Change freely. */
@@ -595,7 +615,7 @@ const TODOS = [
   "Book Changdeokgung Secret Garden English tour (Tue 17 Nov, 2:30 PM) online",
   "Confirm minivan pick-ups: Incheon arrivals 16 Nov (flight lands ~8:00 AM) and Airbnb 21 Nov at 7:00 AM; save the driver's contact",
   "Reserve Yang Good for Thu 19 Nov dinner (7:00 PM)",
-  "Buy / top up T-money cards for 5 people",
+  "Climate Card: buy 5 cards + 5-day pass at Omokgyo Station on 16 Nov (₩18,000 each, ₩90,000 total). Keep some cash as backup",
   "Install Naver Map or KakaoMap and Papago",
   "Get a Korea SIM / eSIM or pocket Wi-Fi",
   "Save the Airbnb address and host contact offline",
@@ -795,10 +815,12 @@ function costChip(di, s) {
   if (!c) return "";
   const [a, b] = c.k;
   const price = (a === 0 && b === 0) ? "Free" : `${range(a, b, won)} pp`;
-  return `<div class="cost">💰 ${price}${c.fixed ? " (booked)" : c.est ? " (est.)" : ""} <small>· ${esc(c.label)}</small></div>`;
+  return `<div class="cost">💰 ${price}${c.fixed ? " (fixed)" : c.est ? " (est.)" : ""} <small>· ${esc(c.label)}</small></div>`;
 }
 function renderCosts() {
   document.getElementById("rateIn").value = RATE;
+  document.getElementById("ccRm").textContent = rm(18000);
+  document.getElementById("ccRm5").textContent = rm(90000);
   let tripLo = { food: 0, place: 0, move: 0 }, tripHi = { food: 0, place: 0, move: 0 }, shopLo = 0, shopHi = 0;
   const amt = (a, b) => `${range(a, b, won)}<br><span class="small">${range(a, b, rm)}</span>`;
   const html = DAYS.map((d, di) => {
@@ -814,7 +836,7 @@ function renderCosts() {
     const body = rows.map(([cat, lbl, c]) => {
       lo += c.k[0]; hi += c.k[1];
       tripLo[cat] += c.k[0]; tripHi[cat] += c.k[1];
-      const tag = c.fixed ? " · booked" : c.est ? " · estimate" : "";
+      const tag = c.fixed ? " · fixed" : c.est ? " · estimate" : "";
       return `<tr><td><span class="cat ${cat}">${cat === "move" ? "Transport" : cat === "food" ? "Food" : "Ticket"}</span><br>${esc(lbl)}<br><span class="small">${esc(c.label)}${tag}</span></td>
         <td class="num">${amt(c.k[0], c.k[1])}</td></tr>`;
     }).join("");
@@ -844,7 +866,7 @@ function renderCosts() {
     <tbody>
       ${line("🍽️ Food (all meals)", tripLo.food, tripHi.food)}
       ${line("📍 Tickets, hanbok & activities", tripLo.place, tripHi.place)}
-      ${line("🚇 Transport (incl. airport minivans)", tripLo.move, tripHi.move)}
+      ${line("🚇 Transport (Climate Card + airport minivans + optional taxis)", tripLo.move, tripHi.move)}
       ${line("Total without shopping", tLo, tHi, "total")}
       ${line("🛍️ Suggested shopping", shopLo, shopHi)}
       ${line("Total with shopping", tLo + shopLo, tHi + shopHi, "total")}
